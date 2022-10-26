@@ -1,4 +1,4 @@
-import { classNames } from "libraries/utils";
+import { classNames } from "commons/utils";
 
 import styles from "./styles.module.css";
 

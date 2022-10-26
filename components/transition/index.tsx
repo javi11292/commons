@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-import { classNames } from "libraries/utils";
+import { classNames } from "commons/utils";
 
 export default function Transition({
   show,

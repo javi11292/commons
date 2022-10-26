@@ -1,5 +1,5 @@
-import Transition from "ui/transition";
-import { classNames } from "libraries/utils";
+import Transition from "commons/components/transition";
+import { classNames } from "commons/utils";
 
 export default function Tooltip({
   children,
