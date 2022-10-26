@@ -1,8 +1,8 @@
 import { forwardRef } from "react";
 
-import { classNames } from "libraries/utils";
-import { hover } from "ui/styles";
-import LoadingIcon from "ui/loading-icon";
+import { classNames } from "commons/utils";
+import { hover } from "commons/components/styles";
+import LoadingIcon from "commons/components/loading-icon";
 
 function Button(
   {
