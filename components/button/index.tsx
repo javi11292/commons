@@ -4,9 +4,15 @@ import { classNames } from "commons/utils";
 import { hover } from "commons/components/styles";
 import LoadingIcon from "commons/components/loading-icon";
 
+const variantClassName = {
+  contained: "bg-lime-500 text-black before:bg-black",
+  outlined: "before:bg-white border border-solid",
+  text: "before:bg-white",
+} as const;
+
 function Button(
   {
-    variant,
+    variant = "text",
     disableUpperCase,
     icon,
     className,
@@ -16,7 +22,7 @@ function Button(
   }: React.HTMLAttributes<HTMLAnchorElement & HTMLButtonElement> & {
     description?: React.ReactNode;
     icon?: boolean;
-    variant?: "filled" | undefined;
+    variant?: "contained" | "outlined" | "text";
     disableUpperCase?: boolean;
     loading?: boolean;
   },
@@ -34,9 +40,7 @@ function Button(
           : "rounded py-2 px-4 font-bold",
         hover,
         !disableUpperCase && !icon && "text-sm uppercase",
-        variant === "filled"
-          ? "bg-lime-500 text-black before:bg-black"
-          : "before:bg-white"
+        variantClassName[variant]
       )}
       {...props}
     >

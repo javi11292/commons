@@ -1,4 +1,4 @@
-const HOST = process.env.NEXT_PUBLIC_HOST;
+const HOST = "/api";
 
 export class ServerError extends Error {
   data: unknown;

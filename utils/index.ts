@@ -5,3 +5,5 @@ export function classNames(...names: (string | false | undefined)[]) {
     return acc;
   }, "");
 }
+
+export * from "./fetch";
