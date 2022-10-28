@@ -1,5 +1,4 @@
 import { classNames } from "commons/utils";
-
 import styles from "./styles.module.css";
 
 export default function LoadingIcon({ className }: { className: string }) {

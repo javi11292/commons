@@ -6,9 +6,9 @@ import { hover } from "commons/components/styles";
 import { classNames } from "commons/utils";
 
 const variantClassName = {
-  contained: "bg-lime-500 text-black before:bg-black",
-  outlined: "before:bg-white border border-solid",
-  text: "before:bg-white",
+  contained: "bg-lime-500 text-black",
+  outlined: "text-lime-500 border border-solid border-current",
+  text: "",
 } as const;
 
 type ConditionalProps =
