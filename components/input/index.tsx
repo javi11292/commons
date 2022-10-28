@@ -4,7 +4,6 @@ import { classNames } from "commons/utils";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
-  className?: string;
   value?: string;
 };
 

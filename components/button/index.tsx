@@ -1,8 +1,9 @@
-import { forwardRef } from "react";
+import type { LinkProps } from "next/link";
+import Link from "next/link";
 
-import { classNames } from "commons/utils";
-import { hover } from "commons/components/styles";
 import LoadingIcon from "commons/components/loading-icon";
+import { hover } from "commons/components/styles";
+import { classNames } from "commons/utils";
 
 const variantClassName = {
   contained: "bg-lime-500 text-black before:bg-black",
@@ -10,40 +11,43 @@ const variantClassName = {
   text: "before:bg-white",
 } as const;
 
-function Button(
-  {
-    variant = "text",
-    disableUpperCase,
-    icon,
-    className,
-    loading,
-    children,
-    ...props
-  }: React.HTMLAttributes<HTMLAnchorElement & HTMLButtonElement> & {
-    description?: React.ReactNode;
-    icon?: boolean;
-    variant?: "contained" | "outlined" | "text";
-    disableUpperCase?: boolean;
-    loading?: boolean;
-  },
-  ref: React.Ref<HTMLAnchorElement & HTMLButtonElement>
-) {
-  return (
-    <button
-      ref={ref}
-      className={classNames(
-        "relative overflow-hidden",
-        loading && "pointer-events-none",
-        className,
-        icon
-          ? "material-icons rounded-full p-2"
-          : "rounded py-2 px-4 font-bold",
-        hover,
-        !disableUpperCase && !icon && "text-sm uppercase",
-        variantClassName[variant]
-      )}
-      {...props}
-    >
+type ConditionalProps =
+  | ({ href?: never } & React.HTMLAttributes<HTMLButtonElement>)
+  | LinkProps;
+
+export type ButtonProps = {
+  children: React.ReactNode;
+  className?: string;
+  description?: React.ReactNode;
+  icon?: boolean;
+  variant?: "contained" | "outlined" | "text";
+  disableUpperCase?: boolean;
+  loading?: boolean;
+} & ConditionalProps;
+
+export default function Button({
+  variant = "text",
+  disableUpperCase,
+  icon,
+  className,
+  loading,
+  children,
+  ...props
+}: ButtonProps) {
+  const commonProps = {
+    className: classNames(
+      "relative overflow-hidden",
+      loading && "pointer-events-none",
+      className,
+      icon ? "material-icons rounded-full p-2" : "rounded py-2 px-4 font-bold",
+      hover,
+      !disableUpperCase && !icon && "text-sm uppercase",
+      variantClassName[variant]
+    ),
+  };
+
+  const content = (
+    <>
       <span
         className={classNames(
           "transition-all",
@@ -55,8 +59,20 @@ function Button(
       {loading && (
         <LoadingIcon className="absolute inset-0 top-2/4 left-2/4 opacity-60 [translate:-50%_-50%]" />
       )}
+    </>
+  );
+
+  if (props.href) {
+    return (
+      <Link {...commonProps} {...props}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button {...commonProps} {...props}>
+      {content}
     </button>
   );
 }
-
-export default forwardRef(Button);
