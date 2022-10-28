@@ -1,16 +1,18 @@
-import { forwardRef } from "react";
-
 import { classNames } from "commons/utils";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
   value?: string;
+  inputRef?: React.Ref<HTMLInputElement>;
 };
 
-function Input(
-  { label, className, value = "", ...props }: InputProps,
-  ref: React.Ref<HTMLInputElement>
-) {
+export default function Input({
+  label,
+  className,
+  value = "",
+  inputRef,
+  ...props
+}: InputProps) {
   return (
     <div
       className={classNames(
@@ -29,7 +31,7 @@ function Input(
         </div>
       )}
       <input
-        ref={ref}
+        ref={inputRef}
         value={value}
         className={classNames("w-full", label && "pt-4")}
         {...props}
@@ -37,5 +39,3 @@ function Input(
     </div>
   );
 }
-
-export default forwardRef(Input);
