@@ -1,17 +1,9 @@
+import { DetailError } from "./error";
+
 const HOST = "/api";
-
-export class ServerError extends Error {
-  data: unknown;
-
-  constructor(data: unknown) {
-    super();
-    this.data = data;
-  }
-}
 
 async function parseResponse(response: Response) {
   const text = await response.text();
-
   try {
     return JSON.parse(text);
   } catch {
@@ -20,14 +12,23 @@ async function parseResponse(response: Response) {
 }
 
 async function send(path: string, init?: RequestInit) {
-  const response = await fetch(path, init);
-  const parsedResponse = await parseResponse(response);
+  try {
+    const response = await fetch(path, init);
+    const result = await parseResponse(response);
 
-  if (!response.ok) {
-    throw new ServerError(parsedResponse);
+    if (!response.ok) {
+      throw new DetailError(
+        typeof result === "object"
+          ? result
+          : { error: "Ha habido un error, inténtalo en otro momento" }
+      );
+    }
+
+    return result;
+  } catch (error) {
+    if (error instanceof DetailError) throw error;
+    throw new Error("Error de conexión");
   }
-
-  return parsedResponse;
 }
 
 export function get(path: string) {
