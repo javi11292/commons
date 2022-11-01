@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { classNames } from "commons/utils";
 
@@ -7,45 +7,46 @@ export default function Transition({
   children,
   className,
   transitionClassName,
+  onTransitionEnd,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
+}: Omit<React.HTMLAttributes<HTMLDivElement>, "onTransitionEnd"> & {
   show: boolean;
   children: React.ReactNode;
   className?: string;
   transitionClassName: string;
+  onTransitionEnd?: (
+    event: React.TransitionEvent<HTMLDivElement>,
+    transition: boolean
+  ) => void;
 }) {
-  const [element, setElement] = useState<HTMLDivElement>();
   const [transition, setTransition] = useState(false);
+  const root = useRef<HTMLDivElement>();
   const observer = useRef() as React.MutableRefObject<IntersectionObserver>;
 
-  const handleRef = useCallback((target: HTMLDivElement) => {
-    if (target) {
-      setElement(target);
-    }
-  }, []);
-
-  function handleTransitionEnd() {
-    if (!show) {
-      setTransition(false);
-    }
-  }
-
-  useEffect(() => {
+  if (!observer.current && typeof window !== "undefined") {
     observer.current = new IntersectionObserver(([{ isIntersecting }]) => {
       if (isIntersecting) {
         setTransition(true);
       }
     });
+  }
+
+  const handleRef = useCallback((target: HTMLDivElement) => {
+    if (target) {
+      observer.current.observe(target);
+    } else if (root.current) {
+      observer.current.unobserve(root.current);
+    }
+
+    root.current = target;
   }, []);
 
-  useEffect(() => {
-    if (!element) return;
-
-    const resizeObserver = observer.current;
-    resizeObserver.observe(element);
-
-    return () => resizeObserver.unobserve(element);
-  }, [element]);
+  function handleTransitionEnd(event: React.TransitionEvent<HTMLDivElement>) {
+    if (!show) {
+      setTransition(false);
+    }
+    onTransitionEnd?.(event, show);
+  }
 
   if (!show && !transition) return null;
 
