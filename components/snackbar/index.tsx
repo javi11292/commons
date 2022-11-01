@@ -1,6 +1,6 @@
 import { action, observable } from "mobx";
 import { observer } from "mobx-react-lite";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Transition from "commons/components/transition";
 import { classNames } from "commons/utils";
@@ -19,9 +19,8 @@ export const addMessage = action(function addNotification(message: Message) {
 });
 
 function Snackbar() {
-  const [firstMessage] = messages;
+  const [message] = messages;
   const [show, setShow] = useState(false);
-  const message = useRef<Message>();
 
   function handleTransitionEnd(
     { propertyName }: React.TransitionEvent<HTMLDivElement>,
@@ -41,23 +40,20 @@ function Snackbar() {
   }
 
   useEffect(() => {
-    message.current = firstMessage;
-    setShow(!!firstMessage);
-  }, [firstMessage]);
+    setShow(!!message);
+  }, [message]);
 
   return (
     <Transition
       show={show}
       className={classNames(
         "fixed bottom-0 left-1/2 -translate-x-1/2 translate-y-full rounded p-3 opacity-0",
-        message.current?.type === "error"
-          ? "bg-red-700"
-          : "bg-lime-500 text-black"
+        message?.type === "error" ? "bg-red-700" : "bg-lime-500 text-black"
       )}
-      transitionClassName="[&]:-translate-y-20 [&]:opacity-100"
+      transitionClassName="[&]:-translate-y-10 [&]:opacity-100"
       onTransitionEnd={handleTransitionEnd}
     >
-      {message.current?.text}
+      {message?.text}
     </Transition>
   );
 }
