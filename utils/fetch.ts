@@ -1,7 +1,5 @@
 import { DetailError } from "./error";
 
-const HOST = "/api";
-
 async function parseResponse(response: Response) {
   const text = await response.text();
   try {
@@ -11,9 +9,9 @@ async function parseResponse(response: Response) {
   }
 }
 
-async function send(path: string, init?: RequestInit) {
+export async function send(url: string, init?: RequestInit) {
   try {
-    const response = await fetch(path, init);
+    const response = await fetch(url, init);
     const result = await parseResponse(response);
 
     if (!response.ok) {
@@ -31,14 +29,14 @@ async function send(path: string, init?: RequestInit) {
   }
 }
 
-export function get(path: string) {
-  return send(`${HOST}${path}`, {
+export function get(url: string) {
+  return send(url, {
     credentials: "include",
   });
 }
 
-export function post(path: string, body: Record<string, unknown>) {
-  return send(`${HOST}${path}`, {
+export function post(url: string, body: Record<string, unknown>) {
+  return send(url, {
     credentials: "include",
     method: "POST",
     headers: {
@@ -48,12 +46,12 @@ export function post(path: string, body: Record<string, unknown>) {
   });
 }
 
-export function upload(path: string, data: Record<string, string | Blob>) {
+export function upload(url: string, data: Record<string, string | Blob>) {
   const formData = new FormData();
 
   Object.entries(data).forEach(([key, value]) => formData.append(key, value));
 
-  return send(`${HOST}${path}`, {
+  return send(url, {
     credentials: "include",
     method: "POST",
     body: formData,
