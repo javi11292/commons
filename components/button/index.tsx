@@ -32,9 +32,11 @@ export default function Button({
   className,
   loading,
   children,
+  onClick,
   ...props
 }: ButtonProps) {
   const commonProps = {
+    onClick: loading ? undefined : onClick,
     className: classNames(
       "relative overflow-hidden",
       loading && "pointer-events-none",
