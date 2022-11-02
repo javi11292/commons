@@ -1,3 +1,6 @@
+import { useState } from "react";
+
+import { useEvent } from "commons/hooks";
 import { DetailError } from "./error";
 
 async function parseResponse(response: Response) {
@@ -7,6 +10,18 @@ async function parseResponse(response: Response) {
   } catch {
     return text;
   }
+}
+
+export function useFetch(callback: (...args: unknown[]) => Promise<unknown>) {
+  const [loading, setLoading] = useState(false);
+
+  const trigger = useEvent(async (...args) => {
+    setLoading(true);
+    await callback(...args);
+    setLoading(false);
+  });
+
+  return { loading, trigger };
 }
 
 export async function send(url: string, init?: RequestInit) {
