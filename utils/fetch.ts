@@ -1,6 +1,3 @@
-import { useState } from "react";
-
-import { useEvent } from "commons/hooks";
 import { DetailError } from "./error";
 
 async function parseResponse(response: Response) {
@@ -10,18 +7,6 @@ async function parseResponse(response: Response) {
   } catch {
     return text;
   }
-}
-
-export function useFetch(callback: (...args: unknown[]) => Promise<unknown>) {
-  const [loading, setLoading] = useState(false);
-
-  const trigger = useEvent(async (...args) => {
-    setLoading(true);
-    await callback(...args);
-    setLoading(false);
-  });
-
-  return { loading, trigger };
 }
 
 export async function send(url: string, init?: RequestInit) {
@@ -61,10 +46,22 @@ export function post(url: string, body: Record<string, unknown>) {
   });
 }
 
-export function upload(url: string, data: Record<string, string | Blob>) {
+export function upload(
+  url: string,
+  data: Record<string, string | Blob | FileList>
+) {
   const formData = new FormData();
 
-  Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+  Object.entries(data).forEach(([key, value]) => {
+    if (value instanceof FileList) {
+      for (let i = 0; i < value.length; i += 1) {
+        formData.append(key, value[i]);
+      }
+
+      return;
+    }
+    formData.append(key, value);
+  });
 
   return send(url, {
     credentials: "include",
