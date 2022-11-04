@@ -12,12 +12,11 @@ const variantClassName = {
 } as const;
 
 type ConditionalProps =
-  | ({ href?: never } & React.HTMLAttributes<HTMLElement>)
+  | ({ href?: never } & React.HTMLAttributes<HTMLSpanElement>)
   | LinkProps;
 
 export type ButtonProps = {
   children: React.ReactNode;
-  label?: React.ReactNode;
   className?: string;
   description?: React.ReactNode;
   icon?: boolean;
@@ -33,7 +32,6 @@ export default function Button({
   className,
   loading,
   children,
-  label,
   onClick,
   ...props
 }: ButtonProps) {
@@ -73,16 +71,9 @@ export default function Button({
     );
   }
 
-  const Component = label ? "label" : "button";
-
   return (
-    <Component
-      {...commonProps}
-      {...props}
-      onClick={loading ? undefined : onClick}
-    >
+    <span {...commonProps} {...props} onClick={loading ? undefined : onClick}>
       {content}
-      {label}
-    </Component>
+    </span>
   );
 }
