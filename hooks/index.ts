@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useRef } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 export function useEvent<T>(handler: (...args: T[]) => unknown) {
   const ref = useRef(handler);
@@ -11,4 +11,19 @@ export function useEvent<T>(handler: (...args: T[]) => unknown) {
     const fn = ref.current;
     return fn(...args);
   }, []);
+}
+
+export function useLoading<T>(callback: (...args: T[]) => Promise<unknown>) {
+  const [loading, setLoading] = useState(false);
+
+  const trigger = useEvent(async (...args: T[]) => {
+    setLoading(true);
+    try {
+      await callback(...args);
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  return { loading, trigger };
 }
