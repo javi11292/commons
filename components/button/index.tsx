@@ -12,11 +12,12 @@ const variantClassName = {
 } as const;
 
 type ConditionalProps =
-  | ({ href?: never } & React.HTMLAttributes<HTMLButtonElement>)
+  | ({ href?: never } & React.HTMLAttributes<HTMLElement>)
   | LinkProps;
 
 export type ButtonProps = {
   children: React.ReactNode;
+  label?: React.ReactNode;
   className?: string;
   description?: React.ReactNode;
   icon?: boolean;
@@ -32,13 +33,13 @@ export default function Button({
   className,
   loading,
   children,
+  label,
   onClick,
   ...props
 }: ButtonProps) {
   const commonProps = {
-    onClick: loading ? undefined : onClick,
     className: classNames(
-      "relative overflow-hidden",
+      "relative overflow-hidden cursor-pointer",
       loading && "pointer-events-none",
       className,
       icon ? "material-icons rounded-full p-2" : "rounded py-2 px-4 font-bold",
@@ -66,15 +67,22 @@ export default function Button({
 
   if (props.href) {
     return (
-      <Link {...commonProps} {...props}>
+      <Link {...commonProps} {...props} onClick={onClick}>
         {content}
       </Link>
     );
   }
 
+  const Component = label ? "label" : "button";
+
   return (
-    <button {...commonProps} {...props}>
+    <Component
+      {...commonProps}
+      {...props}
+      onClick={loading ? undefined : onClick}
+    >
       {content}
-    </button>
+      {label}
+    </Component>
   );
 }
