@@ -1,15 +1,15 @@
 import { DetailError } from "./error";
 
-async function parseResponse(response: Response) {
+const parseResponse = async (response: Response) => {
   const text = await response.text();
   try {
     return JSON.parse(text);
   } catch {
     return text;
   }
-}
+};
 
-export async function send(url: string, init?: RequestInit) {
+export const send = async (url: string, init?: RequestInit) => {
   try {
     const response = await fetch(url, init);
     const result = await parseResponse(response);
@@ -27,15 +27,15 @@ export async function send(url: string, init?: RequestInit) {
     if (error instanceof DetailError) throw error;
     throw new Error("Error de conexión");
   }
-}
+};
 
-export function get(url: string) {
+export const get = (url: string) => {
   return send(url, {
     credentials: "include",
   });
-}
+};
 
-export function post(url: string, body: Record<string, unknown>) {
+export const post = (url: string, body: Record<string, unknown>) => {
   return send(url, {
     credentials: "include",
     method: "POST",
@@ -44,12 +44,12 @@ export function post(url: string, body: Record<string, unknown>) {
     },
     body: JSON.stringify(body),
   });
-}
+};
 
-export function upload(
+export const upload = (
   url: string,
   data: Record<string, string | Blob | FileList>
-) {
+) => {
   const formData = new FormData();
 
   Object.entries(data).forEach(([key, value]) => {
@@ -68,4 +68,4 @@ export function upload(
     method: "POST",
     body: formData,
   });
-}
+};

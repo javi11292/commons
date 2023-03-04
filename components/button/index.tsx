@@ -2,13 +2,12 @@ import type { LinkProps } from "next/link";
 import Link from "next/link";
 
 import LoadingIcon from "commons/components/loading-icon";
-import { hover } from "commons/components/styles";
 import { classNames } from "commons/utils";
 
 const variantClassName = {
   contained: "bg-lime-500 text-black",
   outlined: "text-lime-500 border border-solid border-current",
-  text: "",
+  text: null,
 } as const;
 
 type ConditionalProps =
@@ -35,17 +34,14 @@ export default function Button({
   onClick,
   ...props
 }: ButtonProps) {
-  const commonProps = {
-    className: classNames(
-      "relative overflow-hidden cursor-pointer",
-      loading && "pointer-events-none",
-      className,
-      icon ? "material-icons rounded-full p-2" : "rounded py-2 px-4 font-bold",
-      hover,
-      !disableUpperCase && !icon && "text-sm uppercase",
-      variantClassName[variant]
-    ),
-  };
+  const componentClassName = classNames(
+    "hover-effect relative cursor-pointer overflow-hidden",
+    loading && "pointer-events-none",
+    className,
+    icon ? "material-icons rounded-full p-2" : "rounded py-2 px-4 font-bold",
+    !disableUpperCase && !icon && "text-sm uppercase",
+    variantClassName[variant]
+  );
 
   const content = (
     <>
@@ -65,14 +61,18 @@ export default function Button({
 
   if (props.href) {
     return (
-      <Link {...commonProps} {...props} onClick={onClick}>
+      <Link {...props} className={componentClassName} onClick={onClick}>
         {content}
       </Link>
     );
   }
 
   return (
-    <span {...commonProps} {...props} onClick={loading ? undefined : onClick}>
+    <span
+      {...props}
+      className={componentClassName}
+      onClick={loading ? undefined : onClick}
+    >
       {content}
     </span>
   );

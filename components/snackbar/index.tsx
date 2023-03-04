@@ -10,22 +10,22 @@ type Message = { text: string; type?: "info" | "error" };
 const DELAY = 3000;
 const messages = observable<Message>([]);
 
-const removeMessage = action(function removeNotification() {
+const removeMessage = action(() => {
   messages.shift();
 });
 
-export const addMessage = action(function addNotification(message: Message) {
+export const addMessage = action((message: Message) => {
   messages.push(message);
 });
 
-function Snackbar() {
+const Snackbar = () => {
   const [message] = messages;
   const [show, setShow] = useState(false);
 
-  function handleTransitionEnd(
+  const handleTransitionEnd = (
     { propertyName }: React.TransitionEvent<HTMLDivElement>,
     transition: boolean
-  ) {
+  ) => {
     if (propertyName !== "opacity") {
       return;
     }
@@ -37,7 +37,7 @@ function Snackbar() {
     } else {
       removeMessage();
     }
-  }
+  };
 
   useEffect(() => {
     setShow(!!message);
@@ -56,6 +56,6 @@ function Snackbar() {
       {message?.text}
     </Transition>
   );
-}
+};
 
 export default observer(Snackbar);

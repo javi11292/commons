@@ -1,5 +1,6 @@
-import { useCallback, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
+import { useEvent } from "commons/hooks";
 import { classNames } from "commons/utils";
 
 export default function Transition({
@@ -31,7 +32,7 @@ export default function Transition({
     });
   }
 
-  const handleRef = useCallback((target: HTMLDivElement) => {
+  const handleRef = useEvent((target: HTMLDivElement) => {
     if (target) {
       observer.current.observe(target);
     } else if (root.current) {
@@ -39,14 +40,16 @@ export default function Transition({
     }
 
     root.current = target;
-  }, []);
+  });
 
-  function handleTransitionEnd(event: React.TransitionEvent<HTMLDivElement>) {
+  const handleTransitionEnd = (
+    event: React.TransitionEvent<HTMLDivElement>
+  ) => {
     if (!show) {
       setTransition(false);
     }
     onTransitionEnd?.(event, show);
-  }
+  };
 
   if (!show && !transition) return null;
 

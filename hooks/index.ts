@@ -1,6 +1,6 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 
-export function useEvent<T>(handler: (...args: T[]) => unknown) {
+export const useEvent = <T>(handler: (...args: T[]) => unknown) => {
   const ref = useRef(handler);
 
   ref.current = handler;
@@ -9,19 +9,4 @@ export function useEvent<T>(handler: (...args: T[]) => unknown) {
     const fn = ref.current;
     return fn(...args);
   }, []);
-}
-
-export function useLoading<T>(callback: (...args: T[]) => Promise<unknown>) {
-  const [loading, setLoading] = useState(false);
-
-  const trigger = useEvent(async (...args: T[]) => {
-    setLoading(true);
-    try {
-      await callback(...args);
-    } finally {
-      setLoading(false);
-    }
-  });
-
-  return { loading, trigger };
-}
+};
