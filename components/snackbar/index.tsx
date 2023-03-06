@@ -1,27 +1,17 @@
 "use client";
 
-import { action, observable } from "mobx";
-import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 
 import Transition from "commons/components/transition";
 import { classNames } from "commons/utils";
-
-type Message = { text: string; type?: "info" | "error" };
+import { removeMessage, useMessages } from "./messages";
 
 const DELAY = 3000;
-const messages = observable<Message>([]);
 
-const removeMessage = action(() => {
-  messages.shift();
-});
+export { addMessage } from "./messages";
 
-export const addMessage = action((message: Message) => {
-  messages.push(message);
-});
-
-const Snackbar = () => {
-  const [message] = messages;
+export default function Snackbar() {
+  const [message] = useMessages();
   const [show, setShow] = useState(false);
 
   const handleTransitionEnd = (
@@ -58,6 +48,4 @@ const Snackbar = () => {
       {message?.text}
     </Transition>
   );
-};
-
-export default observer(Snackbar);
+}
