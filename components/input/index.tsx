@@ -35,7 +35,7 @@ export default function Input({
       <input
         ref={inputRef}
         value={value}
-        className={classNames("w-full", label && "pt-4")}
+        className={classNames("w-full [color-scheme:dark]", label && "pt-4")}
         {...props}
       />
     </div>
