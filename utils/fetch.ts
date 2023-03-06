@@ -25,6 +25,7 @@ export const send = async (url: string, init?: RequestInit) => {
     return result;
   } catch (error) {
     if (error instanceof DetailError) throw error;
+    console.error(error);
     throw new Error("Error de conexión");
   }
 };
