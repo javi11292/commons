@@ -1,3 +1,5 @@
+"use client";
+
 import { classNames } from "commons/utils";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {

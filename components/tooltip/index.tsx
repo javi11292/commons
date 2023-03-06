@@ -1,3 +1,5 @@
+"use client";
+
 import Transition from "commons/components/transition";
 import { classNames } from "commons/utils";
 

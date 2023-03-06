@@ -1,5 +1,6 @@
-import type { LinkProps } from "next/link";
-import Link from "next/link";
+"use client";
+
+import Link, { LinkProps } from "next/link";
 
 import LoadingIcon from "commons/components/loading-icon";
 import { classNames } from "commons/utils";
