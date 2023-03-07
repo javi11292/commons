@@ -1,8 +1,6 @@
-"use client";
-
 import { useRef, useState } from "react";
 
-import { useEvent } from "commons/hooks";
+import { useEvent } from "commons/hooks/event";
 import { classNames } from "commons/utils";
 
 export default function Transition({
