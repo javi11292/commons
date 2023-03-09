@@ -48,14 +48,14 @@ export default function Button({
     <>
       <span
         className={classNames(
-          "transition-all",
+          "transition-opacity duration-500",
           loading ? "opacity-0" : "opacity-100"
         )}
       >
         {children}
       </span>
       {loading && (
-        <LoadingIcon className="absolute inset-0 top-2/4 left-2/4 opacity-60 [translate:-50%_-50%]" />
+        <LoadingIcon className="absolute inset-0 top-2/4 left-2/4 [translate:-50%_-50%]" />
       )}
     </>
   );
