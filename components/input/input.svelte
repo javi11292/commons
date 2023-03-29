@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { FormEventHandler, HTMLInputTypeAttribute } from "svelte/elements";
+
 	import { classes } from "$lib/commons/utils/classes";
 
 	let className: Maybe<string> = undefined;
@@ -6,13 +8,18 @@
 	export { className as class };
 	export let inputClass: Maybe<string> = undefined;
 	export let label: Maybe<string> = undefined;
-	export let value: Maybe<string> = undefined;
+	export let type: Maybe<HTMLInputTypeAttribute> = undefined;
 	export let readonly = false;
+	export let value = "";
+
+	const handleChange: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
+		value = currentTarget?.value;
+	};
 </script>
 
 <div
 	class={classes(
-		"group grid border-b border-solid border-neutral-400 transition-all duration-200 focus-within:border-lime-500",
+		"group grid border-b border-solid border-neutral-400 pb-1 transition-all duration-200 focus-within:border-lime-500",
 		className
 	)}
 >
@@ -37,12 +44,20 @@
 	</div>
 
 	<input
-		bind:value
+		on:input={handleChange}
+		on:click
 		on:focus
 		on:blur
-		on:click
-		class={classes("col-start-1 row-start-2 box-border w-full", $$slots.icon && "pr-6", inputClass)}
+		class={classes(
+			"col-start-1 row-start-2 box-border w-full",
+			$$slots.icon && "pr-6",
+			inputClass,
+			type === "date" && "cursor-pointer focus:text-inherit",
+			type === "date" && !value && "text-transparent"
+		)}
 		{readonly}
+		{type}
+		{value}
 	/>
 
 	<slot name="icon" class="pointer-events-none col-start-1 row-start-2 justify-self-end" />
