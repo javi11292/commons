@@ -9,6 +9,7 @@
 	export let inputClass: Maybe<string> = undefined;
 	export let label: Maybe<string> = undefined;
 	export let type: Maybe<HTMLInputTypeAttribute> = undefined;
+	export let disableShrink = false;
 	export let readonly = false;
 	export let value: unknown = "";
 
@@ -41,7 +42,7 @@
 			<div
 				class={classes(
 					"absolute top-4 origin-left whitespace-nowrap text-neutral-400 transition-all duration-200 group-focus-within:-translate-y-full group-focus-within:text-xs group-focus-within:text-lime-500",
-					(value || type === "file") && "-translate-y-full text-xs"
+					(value || type === "file" || disableShrink) && "-translate-y-full text-xs"
 				)}
 			>
 				{label}
