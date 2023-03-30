@@ -25,7 +25,7 @@
 	this={href ? "a" : "button"}
 	on:click
 	class={classes(
-		"relative overflow-hidden outline-none",
+		"relative inline-block overflow-hidden outline-none",
 		disabled ? "pointer-events-none text-neutral-300" : "cursor-pointer",
 		!disabled && (withoutScale ? "hover-opacity" : "active-scale"),
 		loading && "pointer-events-none",
@@ -38,7 +38,7 @@
 	{href}
 	{disabled}
 >
-	<div class="overflow-hidden">
+	<span class="overflow-hidden">
 		<span class={classes("transition-opacity duration-500", loading ? "opacity-0" : "opacity-100")}>
 			{#if icon}
 				<Icon {icon} />
@@ -46,5 +46,5 @@
 				<slot />
 			{/if}
 		</span>
-	</div>
+	</span>
 </svelte:element>
