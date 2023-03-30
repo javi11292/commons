@@ -7,4 +7,4 @@
 	export let icon: string;
 </script>
 
-<img class={classes("h-6 w-6", className)} src={`/icons/${icon}.svg`} alt={icon} />
+<img class={classes("h-6 w-6 max-w-none", className)} src={`/icons/${icon}.svg`} alt={icon} />
