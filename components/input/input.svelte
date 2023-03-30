@@ -10,10 +10,14 @@
 	export let label: Maybe<string> = undefined;
 	export let type: Maybe<HTMLInputTypeAttribute> = undefined;
 	export let readonly = false;
-	export let value = "";
+	export let value: unknown = "";
 
 	const handleChange: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
-		value = currentTarget?.value;
+		if (type === "file") {
+			value = currentTarget.files?.[0];
+		} else {
+			value = currentTarget.value;
+		}
 	};
 </script>
 
@@ -37,7 +41,7 @@
 			<div
 				class={classes(
 					"absolute top-4 origin-left whitespace-nowrap text-neutral-400 transition-all duration-200 group-focus-within:-translate-y-full group-focus-within:text-xs group-focus-within:text-lime-500",
-					value && "-translate-y-full text-xs"
+					(value || type === "file") && "-translate-y-full text-xs"
 				)}
 			>
 				{label}
@@ -50,16 +54,10 @@
 		on:click
 		on:focus
 		on:blur
-		class={classes(
-			"col-start-1 row-start-2 box-border w-full",
-			$$slots.icon && "pr-6",
-			inputClass,
-			type === "date" && "cursor-pointer focus:text-inherit",
-			type === "date" && !value && "text-transparent"
-		)}
+		class={classes("col-start-1 row-start-2 box-border w-full", $$slots.icon && "pr-6", inputClass)}
+		value={type !== "file" ? value : null}
 		{readonly}
 		{type}
-		{value}
 	/>
 
 	<slot name="icon" class="pointer-events-none col-start-1 row-start-2 justify-self-end" />
