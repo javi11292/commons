@@ -23,7 +23,9 @@
 		className
 	)}
 >
-	<div class="col-start-1 row-start-1 h-4" />
+	{#if label}
+		<div class="col-start-1 row-start-1 h-4" />
+	{/if}
 
 	<div
 		class={classes(
