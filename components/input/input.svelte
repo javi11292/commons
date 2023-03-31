@@ -10,6 +10,7 @@
 	export let label: Maybe<string> = undefined;
 	export let type: Maybe<HTMLInputTypeAttribute> = undefined;
 	export let disableShrink = false;
+	export let disableFocusLabel = false;
 	export let readonly = false;
 	export let value: unknown = "";
 
@@ -24,7 +25,8 @@
 
 <div
 	class={classes(
-		"group grid border-b border-solid border-neutral-400 pb-1 transition-all duration-200 focus-within:border-lime-500",
+		"grid border-b border-solid border-neutral-400 pb-1 transition-all duration-200 focus-within:border-lime-500",
+		!disableFocusLabel && "group",
 		className
 	)}
 >
