@@ -9,10 +9,10 @@
 	export let inputClass: Maybe<string> = undefined;
 	export let label: Maybe<string> = undefined;
 	export let type: Maybe<HTMLInputTypeAttribute> = undefined;
+	export let readonly: Maybe<boolean> = undefined;
+	export let value: unknown = "";
 	export let disableShrink = false;
 	export let disableFocusLabel = false;
-	export let readonly = false;
-	export let value: unknown = "";
 
 	const handleChange: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
 		if (type === "file") {

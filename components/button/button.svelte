@@ -7,9 +7,9 @@
 	export { className as class };
 	export let href: Maybe<string> = undefined;
 	export let icon: Maybe<string> = undefined;
+	export let disabled: Maybe<boolean> = undefined;
 	export let variant: "contained" | "outlined" | "text" = "text";
 	export let loading = false;
-	export let disabled = false;
 	export let disableUpperCase = false;
 	export let withoutScale = false;
 	export let withoutBorder = false;
@@ -29,7 +29,7 @@
 		disabled ? "pointer-events-none text-neutral-300" : "cursor-pointer",
 		!disabled && (withoutScale ? "hover-opacity" : "active-scale"),
 		loading && "pointer-events-none",
-		icon ? "rounded-full p-2" : "py-2 px-4 font-bold",
+		icon ? "rounded-full p-2" : "px-4 py-2 font-bold",
 		!withoutBorder && !icon && "rounded",
 		!disableUpperCase && !icon && "text-sm uppercase",
 		variantClass[variant],
