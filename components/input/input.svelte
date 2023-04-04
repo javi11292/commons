@@ -59,6 +59,7 @@
 		on:blur
 		class={classes("col-start-1 row-start-2 box-border w-full", $$slots.icon && "pr-6", inputClass)}
 		value={(type !== "file" ? value : null) || null}
+		aria-label={label}
 		{readonly}
 		{type}
 	/>
