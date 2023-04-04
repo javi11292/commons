@@ -17,13 +17,17 @@
 	export let disableShrink = false;
 
 	let show = false;
+	let buttons: HTMLElement;
 
-	const handleBlur = () => {
-		show = false;
+	const handleBlur = ({ relatedTarget }: FocusEvent) => {
+		if ((relatedTarget as HTMLElement)?.parentElement !== buttons) {
+			show = false;
+		}
 	};
 
 	const handleSelect = (option: Option) => () => {
 		selected = option;
+		show = false;
 	};
 
 	const handleClick = ({ currentTarget }: MouseEvent) => {
@@ -46,7 +50,7 @@
 		{disableShrink}
 	/>
 
-	<svelte:fragment slot="tooltip">
+	<div bind:this={buttons} slot="tooltip">
 		{#each options as option}
 			<Button
 				withoutScale
@@ -58,5 +62,5 @@
 				{option.label}
 			</Button>
 		{/each}
-	</svelte:fragment>
+	</div>
 </Tooltip>

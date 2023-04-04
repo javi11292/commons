@@ -10,7 +10,7 @@
 	export let label: Maybe<string> = undefined;
 	export let type: Maybe<HTMLInputTypeAttribute> = undefined;
 	export let readonly: Maybe<boolean> = undefined;
-	export let value: unknown = "";
+	export let value: unknown = undefined;
 	export let disableShrink = false;
 	export let disableFocusLabel = false;
 
@@ -58,7 +58,7 @@
 		on:focus
 		on:blur
 		class={classes("col-start-1 row-start-2 box-border w-full", $$slots.icon && "pr-6", inputClass)}
-		value={type !== "file" ? value : null}
+		value={(type !== "file" ? value : null) || null}
 		{readonly}
 		{type}
 	/>

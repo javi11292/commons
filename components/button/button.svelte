@@ -8,6 +8,7 @@
 	export let href: Maybe<string> = undefined;
 	export let icon: Maybe<string> = undefined;
 	export let disabled: Maybe<boolean> = undefined;
+	export let element: Maybe<HTMLElement> = undefined;
 	export let variant: "contained" | "outlined" | "text" = "text";
 	export let loading = false;
 	export let disableUpperCase = false;
@@ -23,6 +24,7 @@
 
 <svelte:element
 	this={href ? "a" : "button"}
+	bind:this={element}
 	on:click
 	class={classes(
 		"relative inline-block overflow-hidden outline-none",
