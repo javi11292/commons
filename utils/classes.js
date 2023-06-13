@@ -1,6 +1,4 @@
-/**
- * @param  {unknown[]} names
- */
+/** @param {unknown[]} names */
 export const classes = (...names) =>
 	names.reduce((/** @type {string} */ acc, name) => {
 		if (typeof name !== "string") return acc;
