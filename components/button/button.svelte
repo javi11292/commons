@@ -1,15 +1,21 @@
-<script lang="ts">
+<script>
 	import { classes } from "$lib/commons/utils/classes";
 	import Icon from "../icon";
 
-	let className: Maybe<string> = undefined;
+	/** @type {Maybe<string>} */
+	let className = undefined;
 
 	export { className as class };
-	export let href: Maybe<string> = undefined;
-	export let icon: Maybe<string> = undefined;
-	export let disabled: Maybe<boolean> = undefined;
-	export let element: Maybe<HTMLElement> = undefined;
-	export let variant: "contained" | "outlined" | "text" = "text";
+	/** @type {Maybe<string>} */
+	export let href = undefined;
+	/** @type {Maybe<string>} */
+	export let icon = undefined;
+	/** @type {Maybe<boolean>} */
+	export let disabled = undefined;
+	/** @type {Maybe<HTMLElement>} */
+	export let element = undefined;
+	/** @type {"contained" | "outlined" | "text"} */
+	export let variant = "text";
 	export let loading = false;
 	export let disableUpperCase = false;
 	export let withoutScale = false;
@@ -24,6 +30,8 @@
 
 <svelte:element
 	this={href ? "a" : "button"}
+	role="button"
+	tabindex="0"
 	bind:this={element}
 	on:click
 	class={classes(

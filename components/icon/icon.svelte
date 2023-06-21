@@ -1,10 +1,12 @@
-<script lang="ts">
+<script>
 	import { classes } from "$lib/commons/utils/classes";
 
-	let className: Maybe<string> = undefined;
+	/** @type {Maybe<string>} */
+	let className = undefined;
 
 	export { className as class };
-	export let icon: string;
+	/** @type {string} */
+	export let icon;
 </script>
 
 <img class={classes("h-6 w-6 max-w-none", className)} src={`/icons/${icon}.svg`} alt={icon} />
