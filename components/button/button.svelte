@@ -1,6 +1,7 @@
 <script>
 	import { classes } from "$lib/commons/utils/classes";
 	import Icon from "../icon";
+	import LoadingIcon from "../loading-icon";
 
 	/** @type {Maybe<string>} */
 	let className = undefined;
@@ -16,14 +17,30 @@
 	export let element = undefined;
 	/** @type {"contained" | "outlined" | "text"} */
 	export let variant = "text";
+	/** @type {keyof colorClass} */
+	export let color = "primary";
 	export let loading = false;
 	export let disableUpperCase = false;
 	export let withoutScale = false;
 	export let withoutBorder = false;
 
+	const colorClass = {
+		neutral: {
+			contained: "bg-white text-black",
+			outlined: "text-white",
+		},
+		primary: {
+			contained: "bg-lime-500 text-black",
+			outlined: "text-lime-500",
+		},
+	};
+
 	$: variantClass = {
-		contained: disabled ? "bg-neutral-700" : "bg-lime-500 text-black",
-		outlined: classes(!disabled && "text-lime-500", "border border-solid border-current"),
+		contained: disabled ? "bg-neutral-700" : colorClass[color].contained,
+		outlined: classes(
+			!disabled && colorClass[color].outlined,
+			"border border-solid border-current"
+		),
 		text: null,
 	};
 </script>
@@ -57,4 +74,8 @@
 			{/if}
 		</span>
 	</span>
+
+	{#if loading}
+		<LoadingIcon class="absolute inset-0 left-2/4 top-2/4 [translate:-50%_-50%]" />
+	{/if}
 </svelte:element>
