@@ -1,20 +1,25 @@
-<script lang="ts">
-	import type { FormEventHandler, HTMLInputTypeAttribute } from "svelte/elements";
-
+<script>
 	import { classes } from "$lib/commons/utils/classes";
 
-	let className: Maybe<string> = undefined;
+	/** @type {Maybe<string>} */
+	let className = undefined;
 
 	export { className as class };
-	export let inputClass: Maybe<string> = undefined;
-	export let label: Maybe<string> = undefined;
-	export let type: Maybe<HTMLInputTypeAttribute> = undefined;
-	export let readonly: Maybe<boolean> = undefined;
-	export let value: unknown = undefined;
+	/** @type {Maybe<string>} */
+	export let inputClass = undefined;
+	/** @type {Maybe<string>} */
+	export let label = undefined;
+	/** @type {Maybe<import("svelte/elements").HTMLInputTypeAttribute>} */
+	export let type = undefined;
+	/** @type {Maybe<boolean>} */
+	export let readonly = undefined;
+	/** @type {unknown} */
+	export let value = undefined;
 	export let disableShrink = false;
 	export let disableFocusLabel = false;
 
-	const handleChange: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
+	/** @type {import("svelte/elements").FormEventHandler<HTMLInputElement>} */
+	const handleChange = ({ currentTarget }) => {
 		if (type === "file") {
 			value = currentTarget.files?.[0];
 		} else {
