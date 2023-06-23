@@ -10,34 +10,51 @@ const parseResponse = async (response) => {
 };
 
 /**
+ * @template {boolean} T
  * @param {string} url
  * @param {RequestInit} [init]
+ * @param {T} [raw]
+ * @returns {Promise<T extends true ? Response : any>}
  */
-export const request = async (url, init) => {
+export const request = async (url, init, raw) => {
 	const response = await fetch(url, init);
-	return await parseResponse(response);
-};
-
-/** @param {string} url */
-export const get = (url) => {
-	return request(url, {
-		credentials: "include",
-	});
+	return raw ? response : await parseResponse(response);
 };
 
 /**
+ * @template {boolean} T
+ * @param {string} url
+ * @param {T} [raw]
+ */
+export const get = (url, raw) => {
+	return request(
+		url,
+		{
+			credentials: "include",
+		},
+		raw
+	);
+};
+
+/**
+ * @template {boolean} T
  * @param {string} url
  * @param {object} body
+ * @param {T} [raw]
  */
-export const post = (url, body) => {
-	return request(url, {
-		credentials: "include",
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
+export const post = (url, body, raw) => {
+	return request(
+		url,
+		{
+			credentials: "include",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(body),
 		},
-		body: JSON.stringify(body),
-	});
+		raw
+	);
 };
 
 /**
