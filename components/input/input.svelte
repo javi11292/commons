@@ -58,6 +58,7 @@
 	</div>
 
 	<input
+		autocomplete="off"
 		on:input={handleChange}
 		on:click
 		on:focus
