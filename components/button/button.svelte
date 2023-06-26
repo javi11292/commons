@@ -9,7 +9,7 @@
 	export { className as class };
 	/** @type {Maybe<string>} */
 	export let href = undefined;
-	/** @type {Maybe<string>} */
+	/** @type {Maybe<import("svelte").ComponentProps<Icon>["icon"]>} */
 	export let icon = undefined;
 	/** @type {Maybe<boolean>} */
 	export let disabled = undefined;
@@ -53,7 +53,7 @@
 	on:click
 	class={classes(
 		"relative inline-block overflow-hidden outline-none",
-		disabled ? "pointer-events-none text-neutral-300" : "cursor-pointer",
+		disabled ? "pointer-events-none text-neutral-500" : "cursor-pointer",
 		!disabled && (withoutScale ? "hover-opacity" : "active-scale"),
 		loading && "pointer-events-none",
 		icon ? "rounded-full p-2" : "px-4 py-2 font-bold",
