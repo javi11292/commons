@@ -66,6 +66,7 @@
 		on:click
 		on:focus
 		on:blur
+		on:paste
 		class={classes(
 			"col-start-1 row-start-2 box-border w-full transition-all duration-200",
 			$$slots.icon && "pr-6",
