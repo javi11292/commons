@@ -1,9 +1,11 @@
 <script>
 	import { classes } from "$lib/commons/utils/classes";
 	import add from "./add.svg";
+	import arrowDown from "./arrow-down.svg";
+	import arrowRight from "./arrow-right.svg";
 	import remove from "./remove.svg";
 
-	const icons = { add, remove };
+	const icons = { add, remove, arrowDown, arrowRight };
 
 	/** @type {Maybe<string>} */
 	let className = undefined;
