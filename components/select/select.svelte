@@ -6,6 +6,7 @@
 	import Button from "$lib/commons/components/button";
 	import Input from "$lib/commons/components/input";
 	import Tooltip from "$lib/commons/components/tooltip";
+	import type { Maybe } from "$lib/commons/types";
 	import { classes } from "$lib/commons/utils/classes";
 
 	let className: Maybe<string> = undefined;

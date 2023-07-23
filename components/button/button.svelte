@@ -1,48 +1,23 @@
-<script>
+<script lang="ts">
+	import type { Maybe } from "$lib/commons/types";
 	import { classes } from "$lib/commons/utils/classes";
+	import type { ComponentProps } from "svelte";
 	import Icon from "../icon";
 	import LoadingIcon from "../loading-icon";
 
-	/** @type {Maybe<string>} */
-	let className = undefined;
+	let className: Maybe<string> = undefined;
 
 	export { className as class };
-	/** @type {Maybe<string>} */
-	export let href = undefined;
-	/** @type {Maybe<import("svelte").ComponentProps<Icon>["icon"]>} */
-	export let icon = undefined;
-	/** @type {Maybe<boolean>} */
-	export let disabled = undefined;
-	/** @type {Maybe<HTMLElement>} */
-	export let element = undefined;
-	/** @type {"contained" | "outlined" | "text"} */
-	export let variant = "text";
-	/** @type {keyof colorClass} */
-	export let color = "primary";
+	export let href: Maybe<string> = undefined;
+	export let icon: Maybe<ComponentProps<Icon>["icon"]> = undefined;
+	export let disabled: Maybe<boolean> = undefined;
+	export let element: Maybe<HTMLElement> = undefined;
+	export let variant: "contained" | "outlined" | "text" = "text";
+	export let color: "neutral" | "primary" = "primary";
 	export let loading = false;
 	export let disableUpperCase = false;
-	export let withoutScale = false;
+	export let withoutActive = false;
 	export let withoutBorder = false;
-
-	const colorClass = {
-		neutral: {
-			contained: "bg-white text-black",
-			outlined: "text-white",
-		},
-		primary: {
-			contained: "bg-lime-500 text-black",
-			outlined: "text-lime-500",
-		},
-	};
-
-	$: variantClass = {
-		contained: disabled ? "bg-neutral-700" : colorClass[color].contained,
-		outlined: classes(
-			!disabled && colorClass[color].outlined,
-			"border border-solid border-current"
-		),
-		text: null,
-	};
 </script>
 
 <svelte:element
@@ -51,22 +26,19 @@
 	tabindex="0"
 	bind:this={element}
 	on:click
-	class={classes(
-		"relative inline-block overflow-hidden outline-none",
-		disabled ? "pointer-events-none text-neutral-500" : "cursor-pointer",
-		!disabled && (withoutScale ? "hover-opacity" : "active-scale"),
-		loading && "pointer-events-none",
-		icon ? "rounded-full p-2" : "px-4 py-2 font-bold",
-		!withoutBorder && !icon && "rounded",
-		!disableUpperCase && !icon && "text-sm uppercase",
-		variantClass[variant],
-		className
-	)}
+	class={classes("button", color, variant, className)}
+	class:disabled
+	class:icon
+	class:loading
+	class:active={!disabled && !withoutActive}
+	class:hover={!disabled && withoutActive}
+	class:border={!withoutBorder}
+	class:upperCase={!disableUpperCase && !icon}
 	{href}
 	{disabled}
 >
-	<span class="overflow-hidden">
-		<span class={classes("transition-opacity duration-500", loading ? "opacity-0" : "opacity-100")}>
+	<span class="overflowHidden">
+		<span class="content">
 			{#if icon}
 				<Icon {icon} />
 			{:else}
@@ -76,6 +48,108 @@
 	</span>
 
 	{#if loading}
-		<LoadingIcon class="absolute inset-0 left-2/4 top-2/4 [translate:-50%_-50%]" />
+		<LoadingIcon class="loadingIcon" />
 	{/if}
 </svelte:element>
+
+<style lang="scss">
+	@use "$lib/commons/theme";
+	@use "$lib/commons/classes";
+
+	.button {
+		position: relative;
+		display: inline-block;
+		overflow: hidden;
+		outline: none;
+		cursor: pointer;
+		padding: 1rem 0.5rem;
+		font-weight: bold;
+
+		:global(.loadingIcon) {
+			position: absolute;
+			inset: 0;
+			left: 50%;
+			top: 50%;
+			translate: -50% -50%;
+		}
+	}
+
+	.overflowHidden {
+		overflow: hidden;
+	}
+
+	.content {
+		transition: opacity;
+		transition-duration: 500ms;
+		opacity: 1;
+	}
+
+	.upperCase {
+		text-transform: uppercase;
+	}
+
+	.border {
+		border-radius: 0.25rem;
+	}
+
+	.icon {
+		border-radius: 100%;
+		padding: 0.5rem;
+	}
+
+	.loading {
+		pointer-events: none;
+
+		.content {
+			opacity: 0;
+		}
+	}
+
+	.disabled {
+		@extend .loading;
+		color: theme.$colorDisabled;
+
+		&.contained {
+			background: theme.$colorDisabledDark;
+			color: white;
+		}
+
+		&.outlined {
+			color: white;
+		}
+	}
+
+	.active {
+		@extend %active;
+	}
+
+	.hover {
+		@extend %hover;
+	}
+
+	.neutral {
+		&.contained {
+			background: white;
+			color: black;
+		}
+
+		&.outlined {
+			color: white;
+		}
+	}
+
+	.primary {
+		&.contained {
+			background: theme.$colorPrimary;
+			color: black;
+		}
+
+		&.outlined {
+			color: theme.$colorPrimary;
+		}
+	}
+
+	.outlined {
+		border: 1px solid currentColor;
+	}
+</style>

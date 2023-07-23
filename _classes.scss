@@ -1,0 +1,36 @@
+%hover {
+	position: relative;
+	transition: all;
+
+	&::before {
+		position: absolute;
+		inset: 0;
+		height: 100%;
+		width: 100%;
+		background: currentColor;
+		opacity: 0;
+		content: "";
+	}
+
+	&:hover {
+		&::before {
+			opacity: 0.2;
+		}
+	}
+
+	&:active {
+		transition: none;
+
+		&::before {
+			opacity: 0.4;
+		}
+	}
+}
+
+%active {
+	@extend %hover;
+
+	&:active {
+		transform: scale(0.9);
+	}
+}

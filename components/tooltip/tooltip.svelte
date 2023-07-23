@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { cubicInOut } from "svelte/easing";
-
+	import type { Maybe } from "$lib/commons/types";
 	import { classes } from "$lib/commons/utils/classes";
+	import { cubicInOut } from "svelte/easing";
 
 	let className: Maybe<string> = undefined;
 
 	export { className as class };
 	export let show = false;
 
-	const appear = (_: HTMLDivElement) => ({
+	const appear = (_node: HTMLDivElement) => ({
 		duration: 300,
 		easing: cubicInOut,
 		css: (t: number) => `

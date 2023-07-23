@@ -1,13 +1,13 @@
-<script>
+<script lang="ts">
+	import type { Maybe } from "$lib/commons/types";
 	import { classes } from "$lib/commons/utils/classes";
 
-	/** @type {Maybe<string>} */
-	let className = undefined;
+	let className: Maybe<string> = undefined;
 
 	export { className as class };
 </script>
 
-<svg class={classes("h-6 w-6 animate-spin", className)} viewBox="22 22 44 44">
+<svg class={classes("icon", className)} viewBox="22 22 44 44">
 	<circle
 		class="circle"
 		cx="44"
@@ -19,7 +19,7 @@
 	/>
 </svg>
 
-<style>
+<style lang="scss">
 	@keyframes spin {
 		0% {
 			stroke-dasharray: 1px, 200px;
@@ -35,6 +35,11 @@
 			stroke-dasharray: 100px, 200px;
 			stroke-dashoffset: -125px;
 		}
+	}
+
+	.icon {
+		height: 1.5rem;
+		width: 1.5rem;
 	}
 
 	.circle {

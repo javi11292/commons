@@ -1,5 +1,6 @@
-/** @param {Response} response */
-const parseResponse = async (response) => {
+import type { Get, Post, Request, Upload } from "./fetch.types";
+
+const parseResponse = async (response: Response) => {
 	const text = await response.text();
 
 	try {
@@ -9,24 +10,12 @@ const parseResponse = async (response) => {
 	}
 };
 
-/**
- * @template {boolean} T
- * @param {string} url
- * @param {RequestInit} [init]
- * @param {T} [raw]
- * @returns {Promise<T extends true ? Response : any>}
- */
-export const request = async (url, init, raw) => {
+export const request: Request = async (url, init, raw) => {
 	const response = await fetch(url, init);
 	return raw ? response : await parseResponse(response);
 };
 
-/**
- * @template {boolean} T
- * @param {string} url
- * @param {T} [raw]
- */
-export const get = (url, raw) => {
+export const get: Get = (url, raw) => {
 	return request(
 		url,
 		{
@@ -36,13 +25,7 @@ export const get = (url, raw) => {
 	);
 };
 
-/**
- * @template {boolean} T
- * @param {string} url
- * @param {object} body
- * @param {T} [raw]
- */
-export const post = (url, body, raw) => {
+export const post: Post = (url, body, raw) => {
 	return request(
 		url,
 		{
@@ -57,11 +40,7 @@ export const post = (url, body, raw) => {
 	);
 };
 
-/**
- * @param {string} url
- * @param {Record<string, string | Blob | FileList>} data
- */
-export const upload = (url, data) => {
+export const upload: Upload = (url, data) => {
 	const formData = new FormData();
 
 	Object.entries(data).forEach(([key, value]) => {

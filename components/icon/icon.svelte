@@ -1,20 +1,26 @@
-<script>
+<script lang="ts">
+	import type { Maybe } from "$lib/commons/types";
 	import { classes } from "$lib/commons/utils/classes";
-	import add from "./add.svg";
-	import arrowDown from "./arrow-down.svg";
-	import arrowRight from "./arrow-right.svg";
-	import remove from "./remove.svg";
+	import add from "./icons/add.svg";
+	import arrowDown from "./icons/arrow-down.svg";
+	import arrowRight from "./icons/arrow-right.svg";
+	import remove from "./icons/remove.svg";
 
 	const icons = { add, remove, arrowDown, arrowRight };
 
-	/** @type {Maybe<string>} */
-	let className = undefined;
+	let className: Maybe<string> = undefined;
 
 	export { className as class };
-	/** @type {keyof icons} */
-	export let icon;
+	export let icon: keyof typeof icons;
 </script>
 
-<svg viewBox="0 0 24 24" fill="currentColor" class={classes("h-6 w-6 max-w-none", className)}>
+<svg viewBox="0 0 24 24" fill="currentColor" class={classes("icon", className)}>
 	<use href={`${icons[icon]}#svg`} />
 </svg>
+
+<style lang="scss">
+	.icon {
+		height: 1.5rem;
+		width: 1.5rem;
+	}
+</style>
