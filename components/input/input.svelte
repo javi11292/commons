@@ -14,6 +14,7 @@
 	export let disableShrink = false;
 	export let disableFocusLabel = false;
 	export let disabled = false;
+	export let input: Maybe<HTMLInputElement> = null;
 
 	const handleChange: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
 		if (type === "file") {
@@ -24,50 +25,30 @@
 	};
 </script>
 
-<div
-	class={classes(
-		"grid border-b border-solid pb-1 transition-all duration-200 focus-within:border-lime-500",
-		!disableFocusLabel && "group",
-		className,
-		disabled ? "border-neutral-500" : "border-neutral-400"
-	)}
->
+<div class:disabled class:focusLabel={!disableFocusLabel} class={classes("container", className)}>
 	{#if label}
-		<div class="col-start-1 row-start-1 h-4" />
+		<div class="labelSpace" />
 	{/if}
 
-	<div
-		class={classes(
-			"pointer-events-none relative col-start-1 row-start-1 row-end-3 overflow-hidden",
-			$$slots.icon && "mr-6"
-		)}
-	>
+	<div class:withIcon={$$slots.icon} class="labelContainer">
 		{#if label}
-			<div
-				class={classes(
-					"absolute top-4 origin-left whitespace-nowrap transition-all duration-200 group-focus-within:-translate-y-full group-focus-within:text-xs group-focus-within:text-lime-500",
-					(value || type === "file" || disableShrink) && "-translate-y-full text-xs",
-					disabled ? "text-neutral-500" : "text-neutral-400 "
-				)}
-			>
+			<div class:disableShrink={value || type === "file" || disableShrink} class="label">
 				{label}
 			</div>
 		{/if}
 	</div>
 
 	<input
-		autocomplete="off"
 		on:input={handleChange}
 		on:click
 		on:focus
 		on:blur
 		on:paste
-		class={classes(
-			"col-start-1 row-start-2 box-border w-full transition-all duration-200",
-			$$slots.icon && "pr-6",
-			inputClass,
-			disabled && "text-neutral-500"
-		)}
+		on:animationstart={console.log}
+		bind:this={input}
+		class:disabled
+		class:withIcon={$$slots.icon}
+		class={classes("input", inputClass)}
 		value={(type !== "file" ? value : null) || null}
 		aria-label={label}
 		{readonly}
@@ -77,3 +58,78 @@
 
 	<slot name="icon" class="pointer-events-none col-start-1 row-start-2 justify-self-end" />
 </div>
+
+<style lang="scss">
+	@use "$lib/commons/theme";
+
+	.container {
+		color: theme.$colorNeutralLight;
+		display: grid;
+		border-bottom: 1px solid;
+		transition: all;
+		transition-duration: 200ms;
+		border-bottom: 1px solid currentColor;
+
+		&:focus-within {
+			border-color: theme.$colorPrimary;
+		}
+	}
+
+	.withIcon {
+		margin-right: 1.5rem;
+	}
+
+	.labelSpace {
+		height: 1rem;
+		grid-column-start: 1;
+		grid-row-start: 1;
+	}
+
+	.labelContainer {
+		pointer-events: none;
+		position: relative;
+		grid-column-start: 1;
+		grid-row-start: 1;
+		grid-row-end: 3;
+		overflow: hidden;
+	}
+
+	.focusLabel {
+		&:focus-within {
+			.label {
+				@extend .disableShrink;
+				color: theme.$colorPrimary;
+			}
+		}
+	}
+
+	.label {
+		position: absolute;
+		top: 1rem;
+		transform-origin: left;
+		white-space: nowrap;
+		transition: all;
+		transition-duration: 200ms;
+	}
+
+	.disableShrink {
+		translate: 0 -100%;
+		font-size: 0.75rem;
+		line-height: 1rem;
+	}
+
+	.input {
+		grid-column-start: 1;
+		grid-row-start: 2;
+		padding: 0.25rem 0;
+		box-sizing: border-box;
+		width: 100%;
+		transition: all;
+		transition-duration: 200ms;
+		color: white;
+	}
+
+	.disabled {
+		color: theme.$colorNeutral;
+	}
+</style>

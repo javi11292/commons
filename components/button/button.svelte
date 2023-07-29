@@ -16,8 +16,8 @@
 	export let color: "neutral" | "primary" = "primary";
 	export let loading = false;
 	export let disableUpperCase = false;
-	export let withoutActive = false;
-	export let withoutBorder = false;
+	export let disableActive = false;
+	export let disableBorder = false;
 </script>
 
 <svelte:element
@@ -30,9 +30,9 @@
 	class:disabled
 	class:icon
 	class:loading
-	class:active={!disabled && !withoutActive}
-	class:hover={!disabled && withoutActive}
-	class:border={!withoutBorder}
+	class:active={!disabled && !disableActive}
+	class:hover={!disabled && disableActive}
+	class:border={!disableBorder}
 	class:upperCase={!disableUpperCase && !icon}
 	{href}
 	{disabled}
@@ -107,10 +107,10 @@
 
 	.disabled {
 		@extend .loading;
-		color: theme.$colorDisabled;
+		color: theme.$colorNeutral;
 
 		&.contained {
-			background: theme.$colorDisabledDark;
+			background: theme.$colorNeutralDark;
 			color: white;
 		}
 

@@ -54,8 +54,8 @@
 	<div bind:this={buttons} slot="tooltip">
 		{#each options as option}
 			<Button
-				withoutScale
-				withoutBorder
+				disableActive
+				disableBorder
 				disableUpperCase
 				class={classes("w-full", option === selected && "bg-lime-700")}
 				on:click={handleSelect(option)}

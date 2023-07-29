@@ -1,5 +1,9 @@
 @use "$lib/commons/theme";
 
+html {
+	color-scheme: dark;
+}
+
 body {
 	position: absolute;
 	width: 100%;
@@ -8,13 +12,11 @@ body {
 	background: black;
 	color: white;
 	font-family: sans-serif;
-	user-select: none;
 	-webkit-tap-highlight-color: transparent;
 }
 
 input {
 	all: unset;
-	color-scheme: dark;
 }
 
 button {
