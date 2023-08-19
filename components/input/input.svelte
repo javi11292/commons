@@ -1,12 +1,7 @@
 <script lang="ts">
 	import type { Maybe } from "$lib/commons/types";
-	import { classes } from "$lib/commons/utils/classes";
 	import type { FormEventHandler, HTMLInputTypeAttribute } from "svelte/elements";
 
-	let className: Maybe<string> = undefined;
-
-	export { className as class };
-	export let inputClass: Maybe<string> = undefined;
 	export let label: Maybe<string> = undefined;
 	export let type: Maybe<HTMLInputTypeAttribute> = undefined;
 	export let readonly: Maybe<boolean> = undefined;
@@ -25,7 +20,7 @@
 	};
 </script>
 
-<div class:disabled class:focusLabel={!disableFocusLabel} class={classes("container", className)}>
+<div class:disabled class:focusLabel={!disableFocusLabel} class="container">
 	{#if label}
 		<div class="labelSpace" />
 	{/if}
@@ -48,7 +43,7 @@
 		bind:this={input}
 		class:disabled
 		class:withIcon={$$slots.icon}
-		class={classes("input", inputClass)}
+		class="input"
 		value={(type !== "file" ? value : null) || null}
 		aria-label={label}
 		{readonly}

@@ -1,13 +1,4 @@
-<script lang="ts">
-	import type { Maybe } from "$lib/commons/types";
-	import { classes } from "$lib/commons/utils/classes";
-
-	let className: Maybe<string> = undefined;
-
-	export { className as class };
-</script>
-
-<svg class={classes("icon", className)} viewBox="22 22 44 44">
+<svg class="icon" viewBox="22 22 44 44">
 	<circle
 		class="circle"
 		cx="44"

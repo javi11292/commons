@@ -5,9 +5,6 @@
 	import Icon from "../icon";
 	import LoadingIcon from "../loading-icon";
 
-	let className: Maybe<string> = undefined;
-
-	export { className as class };
 	export let href: Maybe<string> = undefined;
 	export let icon: Maybe<ComponentProps<Icon>["icon"]> = undefined;
 	export let disabled: Maybe<boolean> = undefined;
@@ -26,7 +23,7 @@
 	tabindex="0"
 	bind:this={element}
 	on:click
-	class={classes("button", color, variant, className)}
+	class={classes("button", color, variant)}
 	class:disabled
 	class:icon
 	class:loading
@@ -48,7 +45,9 @@
 	</span>
 
 	{#if loading}
-		<LoadingIcon class="loadingIcon" />
+		<div class="loadingIcon">
+			<LoadingIcon />
+		</div>
 	{/if}
 </svelte:element>
 
@@ -64,14 +63,13 @@
 		cursor: pointer;
 		padding: 1rem 0.5rem;
 		font-weight: bold;
+	}
 
-		:global(.loadingIcon) {
-			position: absolute;
-			inset: 0;
-			left: 50%;
-			top: 50%;
-			translate: -50% -50%;
-		}
+	.loadingIcon {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		translate: -50% -50%;
 	}
 
 	.overflowHidden {
