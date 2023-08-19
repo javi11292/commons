@@ -1,6 +1,7 @@
 %hover {
 	position: relative;
 	transition: all;
+	transition-duration: 200ms;
 
 	&::before {
 		position: absolute;
@@ -12,9 +13,11 @@
 		content: "";
 	}
 
-	&:hover {
-		&::before {
-			opacity: 0.2;
+	@media (hover: hover) {
+		&:hover {
+			&::before {
+				opacity: 0.2;
+			}
 		}
 	}
 
@@ -31,6 +34,6 @@
 	@extend %hover;
 
 	&:active {
-		transform: scale(0.9);
+		scale: 95%;
 	}
 }

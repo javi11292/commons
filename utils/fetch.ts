@@ -12,7 +12,14 @@ const parseResponse = async (response: Response) => {
 
 export const request: Request = async (url, init, raw) => {
 	const response = await fetch(url, init);
-	return raw ? response : await parseResponse(response);
+
+	const data = raw ? response : await parseResponse(response);
+
+	if (!response.ok) {
+		throw data;
+	}
+
+	return data;
 };
 
 export const get: Get = (url, raw) => {
