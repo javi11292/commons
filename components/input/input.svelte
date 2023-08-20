@@ -9,7 +9,7 @@
 	export let disableShrink = false;
 	export let disableFocusLabel = false;
 	export let disabled = false;
-	export let input: Maybe<HTMLInputElement> = null;
+	export let element: Maybe<HTMLInputElement> = null;
 
 	const handleChange: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
 		if (type === "file") {
@@ -39,8 +39,9 @@
 		on:focus
 		on:blur
 		on:paste
+		on:keypress
 		on:animationstart={console.log}
-		bind:this={input}
+		bind:this={element}
 		class:disabled
 		class:withIcon={$$slots.icon}
 		class="input"
