@@ -11,11 +11,13 @@
 	export let element: Maybe<HTMLElement> = undefined;
 	export let variant: "contained" | "outlined" | "text" = "text";
 	export let color: "neutral" | "primary" = "primary";
+	export let size: "sm" | "md" = "md";
 	export let loading = false;
 	export let disableUpperCase = false;
 	export let disableActive = false;
 	export let disableBorder = false;
 	export let mirror = false;
+	export let rounded = false;
 </script>
 
 <svelte:element
@@ -24,10 +26,11 @@
 	tabindex="0"
 	bind:this={element}
 	on:click
-	class={classes("button", color, variant)}
+	class={classes("button", color, variant, size)}
 	class:disabled
 	class:icon
 	class:loading
+	class:rounded
 	class:active={!disabled && !disableActive}
 	class:hover={!disabled && disableActive}
 	class:border={!disableBorder}
@@ -68,6 +71,11 @@
 		font-weight: bold;
 	}
 
+	.sm {
+		padding: 0.5rem;
+		font-size: 0.9rem;
+	}
+
 	.loadingIcon {
 		position: absolute;
 		left: 50%;
@@ -98,7 +106,7 @@
 	}
 
 	.icon {
-		border-radius: 100%;
+		border-radius: 50%;
 		padding: 0.5rem;
 	}
 
@@ -156,5 +164,9 @@
 
 	.outlined {
 		border: 1px solid currentColor;
+	}
+
+	.rounded {
+		border-radius: 1rem;
 	}
 </style>
