@@ -15,6 +15,7 @@
 	export let disableUpperCase = false;
 	export let disableActive = false;
 	export let disableBorder = false;
+	export let mirror = false;
 </script>
 
 <svelte:element
@@ -37,7 +38,9 @@
 	<span class="overflowHidden">
 		<span class="content">
 			{#if icon}
-				<Icon {icon} />
+				<div class:mirror>
+					<Icon {icon} />
+				</div>
 			{:else}
 				<slot />
 			{/if}
@@ -74,6 +77,10 @@
 
 	.overflowHidden {
 		overflow: hidden;
+	}
+
+	.mirror {
+		scale: -1 1;
 	}
 
 	.content {
