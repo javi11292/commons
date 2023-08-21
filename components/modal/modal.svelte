@@ -15,18 +15,44 @@
 		on:click={() => (open = false)}
 		on:keypress
 		use:portal
-		role="button"
 		tabindex="0"
-		transition:fade={{ duration: 150 }}
-		class="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-80"
+		role="button"
+		class="backdrop"
+		transition:fade
 	>
-		<div
-			transition:scale={{ duration: 150 }}
-			class="flex max-h-[90vh] max-w-[90vw] overflow-hidden rounded-md bg-neutral-800 shadow-md shadow-black"
-		>
-			<div class="overflow-y-auto p-4">
+		<div transition:scale class="modal">
+			<div class="content">
 				<slot />
 			</div>
 		</div>
 	</div>
 {/if}
+
+<style lang="scss">
+	@use "$lib/commons/theme";
+
+	.backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 10;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(0, 0, 0, 0.8);
+	}
+
+	.modal {
+		display: flex;
+		max-height: 90vh;
+		max-width: 90vw;
+		overflow: hidden;
+		border-radius: 0.25rem;
+		background: theme.$colorNeutralDark;
+		box-shadow: 0 4px 6px black;
+	}
+
+	.content {
+		overflow-y: auto;
+		padding: 1rem;
+	}
+</style>
