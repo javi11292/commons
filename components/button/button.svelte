@@ -119,15 +119,16 @@
 	}
 
 	.disabled {
-		@extend .loading;
+		pointer-events: none;
 		color: theme.$colorNeutral;
+		opacity: 0.5;
 
-		&.contained {
+		&#{&}.contained {
 			background: theme.$colorNeutralDark;
 			color: white;
 		}
 
-		&.outlined {
+		&#{&}.outlined {
 			color: white;
 		}
 	}
