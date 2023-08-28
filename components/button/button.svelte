@@ -108,12 +108,10 @@
 	.icon {
 		border-radius: 50%;
 		padding: 0.5rem;
-		width: 1.5rem;
-		height: 1.5rem;
+		font-size: 1.5rem;
 
 		&.lg {
-			width: 2.5rem;
-			height: 2.5rem;
+			font-size: 2.5rem;
 		}
 	}
 

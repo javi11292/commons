@@ -1,4 +1,4 @@
-%hover {
+@mixin root {
 	position: relative;
 	transition: all;
 	transition-duration: 200ms;
@@ -12,21 +12,37 @@
 		opacity: 0;
 		content: "";
 	}
+}
+
+@mixin hover {
+	&::before {
+		opacity: 0.2;
+	}
+}
+
+@mixin active {
+	transition: none;
+
+	&::before {
+		opacity: 0.4;
+	}
+}
+
+%root {
+	@include root;
+}
+
+%hover {
+	@extend %root;
 
 	@media (hover: hover) {
 		&:hover {
-			&::before {
-				opacity: 0.2;
-			}
+			@include hover;
 		}
 	}
 
 	&:active {
-		transition: none;
-
-		&::before {
-			opacity: 0.4;
-		}
+		@include active;
 	}
 }
 
