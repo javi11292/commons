@@ -1,13 +1,8 @@
 <script lang="ts">
+	import { portal } from "$lib/commons/utils/portal";
 	import { fade, scale } from "svelte/transition";
 
 	export let open = false;
-
-	const portal = (node: HTMLElement) => {
-		document.body.appendChild(node);
-
-		return { destroy: () => node.parentElement && document.body.removeChild(node) };
-	};
 </script>
 
 {#if open}
@@ -15,6 +10,7 @@
 		on:click={() => (open = false)}
 		on:keypress
 		use:portal
+		hidden
 		tabindex="0"
 		role="button"
 		class="backdrop"
