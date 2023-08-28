@@ -11,7 +11,7 @@
 	export let element: Maybe<HTMLElement> = undefined;
 	export let variant: "contained" | "outlined" | "text" = "text";
 	export let color: "neutral" | "primary" = "primary";
-	export let size: "sm" | "md" = "md";
+	export let size: "lg" | "sm" | "md" = "md";
 	export let loading = false;
 	export let disableUpperCase = false;
 	export let disableActive = false;
@@ -108,6 +108,13 @@
 	.icon {
 		border-radius: 50%;
 		padding: 0.5rem;
+		width: 1.5rem;
+		height: 1.5rem;
+
+		&.lg {
+			width: 2.5rem;
+			height: 2.5rem;
+		}
 	}
 
 	.loading {
