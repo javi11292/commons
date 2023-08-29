@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { portal } from "$lib/commons/utils/portal";
 	import { fly } from "svelte/transition";
 	import { store, types } from "./store";
 
@@ -25,6 +26,7 @@
 
 {#if message && show}
 	<div
+		use:portal
 		class="container"
 		class:error
 		on:introend={handleIn}
