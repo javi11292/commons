@@ -1,18 +1,13 @@
 <script lang="ts">
-	import add from "./icons/add.svg";
-	import arrowDown from "./icons/arrow-down.svg";
-	import arrowRight from "./icons/arrow-right.svg";
-	import favoriteBorder from "./icons/favorite-border.svg";
-	import favorite from "./icons/favorite.svg";
-	import remove from "./icons/remove.svg";
+	export let icon: string;
 
-	const icons = { add, remove, arrowDown, arrowRight, favorite, favoriteBorder };
-
-	export let icon: keyof typeof icons;
+	$: component = import(`../../assets/icons/${icon}.svg`);
 </script>
 
 <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
-	<use href={`${icons[icon]}#svg`} />
+	{#await component then href}
+		<use href={`${href.default}#svg`} />
+	{/await}
 </svg>
 
 <style lang="scss">
