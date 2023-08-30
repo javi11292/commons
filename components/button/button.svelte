@@ -17,7 +17,6 @@
 	export let disableActive = false;
 	export let disableBorder = false;
 	export let mirror = false;
-	export let rounded = false;
 </script>
 
 <svelte:element
@@ -30,7 +29,6 @@
 	class:disabled
 	class:icon
 	class:loading
-	class:rounded
 	class:active={!disabled && !disableActive}
 	class:hover={!disabled && disableActive}
 	class:border={!disableBorder}
@@ -102,7 +100,7 @@
 	}
 
 	.border {
-		border-radius: 0.25rem;
+		border-radius: 9999px;
 	}
 
 	.icon {
@@ -170,9 +168,5 @@
 
 	.outlined {
 		border: 1px solid currentColor;
-	}
-
-	.rounded {
-		border-radius: 1rem;
 	}
 </style>
