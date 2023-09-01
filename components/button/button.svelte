@@ -30,7 +30,7 @@
 >
 	<div
 		class={classes("button", color, variant, size)}
-		class:disabled
+		class:disabled={disabled || loading}
 		class:icon
 		class:loading
 		class:active={!disabled && !disableActive}
