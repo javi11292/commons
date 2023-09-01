@@ -1,13 +1,20 @@
-const getTarget = (target?: Element | null) => target || document.body;
-
-export const portal = (node: HTMLElement, target?: Element | null) => {
-	const targetElement = getTarget(target);
-
-	targetElement.appendChild(node);
-	node.hidden = false;
+export const portal = (node: HTMLElement, target: null | Element = document.body) => {
+	if (target) {
+		target.appendChild(node);
+		node.hidden = false;
+	} else {
+		node.hidden = true;
+	}
 
 	return {
-		update: (nextTarget: typeof target) => getTarget(nextTarget).appendChild(node),
+		update: (nextTarget: typeof target = document.body) => {
+			if (nextTarget) {
+				nextTarget.appendChild(node);
+				node.hidden = false;
+			} else {
+				node.hidden = true;
+			}
+		},
 		destroy: () => node.parentNode && node.parentNode.removeChild(node),
 	};
 };
