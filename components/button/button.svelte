@@ -25,34 +25,37 @@
 	tabindex="0"
 	bind:this={element}
 	on:click
-	class={classes("button", color, variant, size)}
-	class:disabled
-	class:icon
-	class:loading
-	class:active={!disabled && !disableActive}
-	class:hover={!disabled && disableActive}
-	class:border={!disableBorder}
-	class:upperCase={!disableUpperCase && !icon}
 	{href}
 	{disabled}
 >
-	<span class="overflowHidden">
-		<span class="content">
-			{#if icon}
-				<div class:mirror>
-					<Icon {icon} />
-				</div>
-			{:else}
-				<slot />
-			{/if}
+	<div
+		class={classes("button", color, variant, size)}
+		class:disabled
+		class:icon
+		class:loading
+		class:active={!disabled && !disableActive}
+		class:hover={!disabled && disableActive}
+		class:border={!disableBorder}
+		class:upperCase={!disableUpperCase && !icon}
+	>
+		<span class="overflowHidden">
+			<span class="content">
+				{#if icon}
+					<div class:mirror>
+						<Icon {icon} />
+					</div>
+				{:else}
+					<slot />
+				{/if}
+			</span>
 		</span>
-	</span>
 
-	{#if loading}
-		<div class="loadingIcon">
-			<LoadingIcon />
-		</div>
-	{/if}
+		{#if loading}
+			<div class="loadingIcon">
+				<LoadingIcon />
+			</div>
+		{/if}
+	</div>
 </svelte:element>
 
 <style lang="scss">
@@ -61,7 +64,6 @@
 
 	.button {
 		position: relative;
-		display: inline-block;
 		overflow: hidden;
 		outline: none;
 		cursor: pointer;
