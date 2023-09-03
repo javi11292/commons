@@ -69,6 +69,7 @@
 		cursor: pointer;
 		padding: 1rem;
 		font-weight: bold;
+		text-align: center;
 	}
 
 	.sm {
