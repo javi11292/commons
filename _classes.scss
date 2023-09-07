@@ -11,20 +11,25 @@
 		background: currentColor;
 		opacity: 0;
 		content: "";
+		z-index: -1;
 	}
 }
 
-@mixin hover {
-	&::before {
-		opacity: 0.2;
+@mixin hover($opacity: 0.2) {
+	@media (hover: hover) {
+		&:hover::before {
+			opacity: $opacity;
+		}
 	}
 }
 
-@mixin active {
-	transition: none;
+@mixin active($opacity: 0.4) {
+	&:active {
+		transition: none;
 
-	&::before {
-		opacity: 0.4;
+		&::before {
+			opacity: $opacity;
+		}
 	}
 }
 
@@ -35,15 +40,9 @@
 %hover {
 	@extend %root;
 
-	@media (hover: hover) {
-		&:hover {
-			@include hover;
-		}
-	}
+	@include hover;
 
-	&:active {
-		@include active;
-	}
+	@include active;
 }
 
 %active {
