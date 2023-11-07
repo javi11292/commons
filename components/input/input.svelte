@@ -56,7 +56,7 @@
 </div>
 
 <style lang="scss">
-	@use "$lib/commons/theme";
+	@use "src/lib/commons/theme";
 
 	.container {
 		color: theme.$colorNeutralLight;
