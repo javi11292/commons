@@ -13,11 +13,9 @@ body {
 	-webkit-tap-highlight-color: transparent;
 }
 
-input {
-	all: unset;
-}
-
-button {
+input,
+button,
+a {
 	all: unset;
 }
 
