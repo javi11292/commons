@@ -1,15 +1,13 @@
 <script lang="ts">
-	import add from "$lib/commons/assets/icons/add.svg?url";
+	export let icon: string;
 
-	const icons = {
-		add,
-	};
-
-	export let icon: keyof typeof icons;
+	$: component = import(`../../assets/icons/${icon}.svg?url`);
 </script>
 
 <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
-	<use href={`${icons[icon]}#svg`} />
+	{#await component then href}
+		<use href={`${href.default}#svg`} />
+	{/await}
 </svg>
 
 <style lang="scss">
