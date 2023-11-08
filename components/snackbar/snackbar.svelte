@@ -3,7 +3,7 @@
 	import { fly } from "svelte/transition";
 	import { store, types } from "./store";
 
-	const DELAY = 3000;
+	const DELAY = 30000;
 
 	$: message = $store[0];
 
@@ -25,15 +25,16 @@
 </script>
 
 {#if message && show}
-	<div
-		use:portal
-		class="container"
-		class:error
-		on:introend={handleIn}
-		on:outroend={handleOut}
-		transition:fly={{ y: "100%" }}
-	>
-		{message.text}
+	<div use:portal class="container">
+		<div
+			class="message"
+			class:error
+			on:introend={handleIn}
+			on:outroend={handleOut}
+			transition:fly={{ y: "100%" }}
+		>
+			{message.text}
+		</div>
 	</div>
 {/if}
 
@@ -41,7 +42,17 @@
 	@use "src/lib/commons/theme";
 
 	.container {
-		position: fixed;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		width: 100vw;
+		height: 100vh;
+		overflow: hidden;
+	}
+
+	.message {
+		pointer-events: all;
+		position: absolute;
 		bottom: 1rem;
 		left: 50%;
 		translate: -50%;
