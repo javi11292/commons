@@ -13,6 +13,7 @@ type Message = {
 export const store = writable<Message[]>([]);
 
 export const addError = (text: string) =>
+	text &&
 	store.update((value) => {
 		value.push({ text, type: types.ERROR });
 		return value;
