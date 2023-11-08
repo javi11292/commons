@@ -10,13 +10,23 @@ const parseResponse = async (response: Response) => {
 	}
 };
 
+export class NetworkError<T extends { message: string }> extends Error {
+	error: T;
+
+	constructor(error: T) {
+		super(error.message);
+		this.name = "NetworkError";
+		this.error = error;
+	}
+}
+
 export const request: Request = async (url, init, raw) => {
 	const response = await fetch(url, init);
 
 	const data = raw ? response : await parseResponse(response);
 
 	if (!response.ok) {
-		throw data;
+		throw new NetworkError(data);
 	}
 
 	return data;

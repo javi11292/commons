@@ -38,7 +38,7 @@
 {/if}
 
 <style lang="scss">
-	@use "$lib/commons/theme";
+	@use "src/lib/commons/theme";
 
 	.container {
 		position: fixed;
