@@ -3,7 +3,7 @@
 	import { fly } from "svelte/transition";
 	import { store, types } from "./store";
 
-	const DELAY = 30000;
+	const DELAY = 3000;
 
 	$: message = $store[0];
 
