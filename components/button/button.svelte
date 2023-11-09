@@ -27,35 +27,32 @@
 	on:click
 	{href}
 	{disabled}
+	class={classes("button", color, variant, size)}
+	class:disabled={disabled || loading}
+	class:icon
+	class:loading
+	class:active={!disabled && !disableActive}
+	class:hover={!disabled && disableActive}
+	class:border={!disableBorder}
+	class:upperCase={!disableUpperCase && !icon}
 >
-	<div
-		class={classes("button", color, variant, size)}
-		class:disabled={disabled || loading}
-		class:icon
-		class:loading
-		class:active={!disabled && !disableActive}
-		class:hover={!disabled && disableActive}
-		class:border={!disableBorder}
-		class:upperCase={!disableUpperCase && !icon}
-	>
-		<span class="overflowHidden">
-			<span class="content">
-				{#if icon}
-					<div class:mirror>
-						<Icon {icon} />
-					</div>
-				{:else}
-					<slot />
-				{/if}
-			</span>
+	<span class="overflowHidden">
+		<span class="content">
+			{#if icon}
+				<div class:mirror>
+					<Icon {icon} />
+				</div>
+			{:else}
+				<slot />
+			{/if}
 		</span>
+	</span>
 
-		{#if loading}
-			<div class="loadingIcon">
-				<LoadingIcon />
-			</div>
-		{/if}
-	</div>
+	{#if loading}
+		<div class="loadingIcon">
+			<LoadingIcon />
+		</div>
+	{/if}
 </svelte:element>
 
 <style lang="scss">
