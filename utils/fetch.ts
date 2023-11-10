@@ -20,7 +20,11 @@ export class NetworkError<T extends { message: string }> extends Error {
 	}
 }
 
-export const request: Request = async (url, init, raw) => {
+export const request: Request = async (url, init = {}, raw) => {
+	if (typeof window !== "undefined") {
+		init.credentials = "include";
+	}
+
 	const response = await fetch(url, init);
 
 	const data = raw ? response : await parseResponse(response);
@@ -33,20 +37,13 @@ export const request: Request = async (url, init, raw) => {
 };
 
 export const get: Get = (url, raw) => {
-	return request(
-		url,
-		{
-			credentials: "include",
-		},
-		raw
-	);
+	return request(url, undefined, raw);
 };
 
 export const post: Post = (url, body, raw) => {
 	return request(
 		url,
 		{
-			credentials: "include",
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -72,7 +69,6 @@ export const upload: Upload = (url, data) => {
 	});
 
 	return request(url, {
-		credentials: "include",
 		method: "POST",
 		body: formData,
 	});
