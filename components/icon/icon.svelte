@@ -1,15 +1,11 @@
 <script lang="ts">
-	export let icon: string;
+	import icons from "$lib/commons/assets/icons.svg?url";
 
-	$: image = `/icons/${icon}.svg#svg`;
+	export let icon: string;
 </script>
 
-<svelte:head>
-	<link rel="preload" as="image" href={image} />
-</svelte:head>
-
 <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
-	<use href={image} />
+	<use href={`${icons}#${icon}`} />
 </svg>
 
 <style lang="scss">
