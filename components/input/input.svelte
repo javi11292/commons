@@ -40,7 +40,6 @@
 		on:blur
 		on:paste
 		on:keypress
-		on:animationstart={console.log}
 		bind:this={element}
 		class:disabled
 		class:withIcon={$$slots.icon}
