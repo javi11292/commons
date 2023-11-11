@@ -62,6 +62,10 @@
 	@use "src/lib/commons/theme";
 	@use "src/lib/commons/classes";
 
+	a {
+		all: unset;
+	}
+
 	.button {
 		position: relative;
 		overflow: hidden;
