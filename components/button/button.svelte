@@ -59,8 +59,12 @@
 </svelte:element>
 
 <style lang="scss">
-	@use "$lib/commons/theme";
-	@use "$lib/commons/classes";
+	@use "src/lib/commons/theme";
+	@use "src/lib/commons/classes";
+
+	a {
+		all: unset;
+	}
 
 	.button {
 		position: relative;

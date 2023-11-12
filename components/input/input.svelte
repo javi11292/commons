@@ -40,7 +40,6 @@
 		on:blur
 		on:paste
 		on:keypress
-		on:animationstart={console.log}
 		bind:this={element}
 		class:disabled
 		class:withIcon={$$slots.icon}
@@ -56,7 +55,7 @@
 </div>
 
 <style lang="scss">
-	@use "$lib/commons/theme";
+	@use "src/lib/commons/theme";
 
 	.container {
 		color: theme.$colorNeutralLight;

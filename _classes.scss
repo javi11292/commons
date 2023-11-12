@@ -11,11 +11,11 @@
 		background: currentColor;
 		opacity: 0;
 		content: "";
-		z-index: -1;
+		pointer-events: none;
 	}
 }
 
-@mixin hover($opacity: 0.2) {
+@mixin hover($opacity: 0.1) {
 	@media (hover: hover) {
 		&:hover::before {
 			opacity: $opacity;
@@ -23,7 +23,7 @@
 	}
 }
 
-@mixin active($opacity: 0.4) {
+@mixin active($opacity: 0.2) {
 	&:active {
 		transition: none;
 

@@ -25,23 +25,34 @@
 </script>
 
 {#if message && show}
-	<div
-		use:portal
-		class="container"
-		class:error
-		on:introend={handleIn}
-		on:outroend={handleOut}
-		transition:fly={{ y: "100%" }}
-	>
-		{message.text}
+	<div use:portal class="container">
+		<div
+			class="message"
+			class:error
+			on:introend={handleIn}
+			on:outroend={handleOut}
+			transition:fly={{ y: "100%" }}
+		>
+			{message.text}
+		</div>
 	</div>
 {/if}
 
 <style lang="scss">
-	@use "$lib/commons/theme";
+	@use "src/lib/commons/theme";
 
 	.container {
-		position: fixed;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.message {
+		pointer-events: all;
+		position: absolute;
 		bottom: 1rem;
 		left: 50%;
 		translate: -50%;

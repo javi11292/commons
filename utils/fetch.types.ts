@@ -1,16 +1,20 @@
-type RequestResponse<T> = Promise<T extends true ? Response : unknown>;
+type RequestResponse<R, T> = Promise<T extends true ? Response : R>;
 
-export type Request = <T extends boolean>(
+export type Request = <R, T extends boolean = false>(
 	url: string,
 	init?: RequestInit,
 	raw?: T
-) => RequestResponse<T>;
+) => RequestResponse<R, T>;
 
-export type Get = <T extends boolean>(url: string, raw?: T) => RequestResponse<T>;
+export type Get = <R, T extends boolean = false>(url: string, raw?: T) => RequestResponse<R, T>;
 
-export type Post = <T extends boolean>(url: string, body: object, raw?: T) => RequestResponse<T>;
+export type Post = <R, T extends boolean = false>(
+	url: string,
+	body: object,
+	raw?: T
+) => RequestResponse<R, T>;
 
-export type Upload = (
+export type Upload = <R>(
 	url: string,
 	data: Record<string, string | Blob | FileList>
-) => RequestResponse<false>;
+) => RequestResponse<R, false>;
