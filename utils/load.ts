@@ -1,12 +1,17 @@
-export const getLoad = (callback: () => unknown) => {
-	let load = typeof window !== "undefined";
+export const getData = (id: string): any | null => {
+	const element = document.querySelector(`astro-load#${id}`);
 
-	return async () => {
-		if (!load) {
-			return;
-		}
+	if (element && element instanceof HTMLElement && element.dataset.load) {
+		return JSON.parse(element.dataset.load);
+	}
 
-		load = false;
-		callback();
-	};
+	return null;
+};
+
+export const getLoading = () => {
+	let resolver: any;
+
+	const loading = new Promise((resolve) => (resolver = resolve));
+
+	return { loading, resolve: resolver };
 };
