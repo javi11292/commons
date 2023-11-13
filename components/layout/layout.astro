@@ -4,12 +4,15 @@ import { ViewTransitions } from "astro:transitions";
 
 interface Props {
 	title: string;
+	skipCache?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, skipCache } = Astro.props;
 
-Astro.response.headers.set("Vary", "Cookie");
-Astro.response.headers.set("Cache-Control", "private, max-age=3600");
+if (!skipCache) {
+	Astro.response.headers.set("Vary", "Cookie");
+	Astro.response.headers.set("Cache-Control", "private, max-age=3600");
+}
 
 if (Astro.request.headers.get("Cache-Control")) {
 	Astro.cookies.set("version", Date.now().toString());
