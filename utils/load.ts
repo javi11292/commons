@@ -1,12 +1,4 @@
-export const getData = (id: string): any | null => {
-	const element = document.querySelector(`astro-load#${id}`);
-
-	if (element && element instanceof HTMLElement && element.dataset.load) {
-		return JSON.parse(element.dataset.load);
-	}
-
-	return null;
-};
+export const getData = (id: string) => (window as any).__AstroLoad__[id];
 
 export const getLoading = () => {
 	let resolver: any;

@@ -1,0 +1,10 @@
+---
+interface Props {
+	data: any;
+	id: string;
+}
+
+const { data, id } = Astro.props;
+---
+
+<script define:vars={{ id, data }}>window.__AstroLoad__||(window.__AstroLoad__={}),window.__AstroLoad__[id]=data;</script>
