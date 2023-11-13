@@ -4,7 +4,14 @@ interface Props {
 	id: string;
 }
 
-const { data, id } = Astro.props;
+const { id, data } = Astro.props;
 ---
 
-<script define:vars={{ id, data }}>window.__AstroLoad__||(window.__AstroLoad__={}),window.__AstroLoad__[id]=data;</script>
+<script define:vars={{ id, data }}>
+	const load = window.__AstroLoad__ || (window.__AstroLoad__ = {});
+	const info = load[id] || (load[id] = {});
+
+	info.data = data;
+
+	if (info.load) info.load(id);
+</script>
