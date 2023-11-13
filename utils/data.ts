@@ -12,14 +12,15 @@ export const getData = <T>(callback: (data: T) => void) => {
 		const astroLoad = (window as any).__AstroLoad__ || ((window as any).__AstroLoad__ = {});
 		const info = astroLoad[id] || (astroLoad[id] = {});
 
-		info.load = load;
-
 		loading.set(true);
 		state.set(null);
 
 		if (!("data" in info)) {
+			info.load = load;
 			return;
 		}
+
+		delete info.load;
 
 		callback(info.data);
 
