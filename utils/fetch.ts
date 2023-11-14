@@ -50,7 +50,7 @@ export const post: Post = (url, body, raw) => {
 			},
 			body: JSON.stringify(body),
 		},
-		raw
+		raw,
 	);
 };
 
