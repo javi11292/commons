@@ -10,7 +10,7 @@
 <header
 	class={classes(
 		className,
-		"sticky top-0 z-10 flex items-center justify-between bg-neutral-900 px-2 py-1"
+		"sticky top-0 z-10 flex items-center justify-between bg-neutral-900 px-2 py-1",
 	)}
 >
 	<slot />

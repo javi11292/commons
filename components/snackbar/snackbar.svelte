@@ -39,7 +39,7 @@
 {/if}
 
 <style lang="scss">
-	@use "src/lib/commons/theme";
+	@use "$lib/commons/theme";
 
 	.container {
 		pointer-events: none;
