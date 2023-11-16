@@ -1,22 +1,36 @@
 <script lang="ts">
-	import type { Maybe } from "$lib/commons/types";
-	import type { FormEventHandler, HTMLInputTypeAttribute } from "svelte/elements";
+	import type {
+		FormEventHandler,
+		HTMLInputAttributes,
+		HTMLInputTypeAttribute,
+	} from "svelte/elements";
 
-	export let label: Maybe<string> = undefined;
-	export let type: Maybe<HTMLInputTypeAttribute> = undefined;
-	export let readonly: Maybe<boolean> = undefined;
-	export let value: unknown = undefined;
-	export let disableShrink = false;
-	export let disableFocusLabel = false;
-	export let disabled = false;
-	export let element: Maybe<HTMLInputElement> = null;
+	type Props = {
+		icon?: any;
+		label?: string;
+		type?: HTMLInputTypeAttribute;
+		value?: unknown;
+		disableShrink?: boolean;
+		disableFocusLabel?: boolean;
+		disabled?: boolean;
+		element?: HTMLElement;
+	} & HTMLInputAttributes;
 
-	const handleChange: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
+	let { label, type, value, disableShrink, disableFocusLabel, disabled, element, icon, ...props } =
+		$props<Props>();
+
+	const oninput: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
 		if (type === "file") {
 			value = currentTarget.files?.[0];
 		} else {
 			value = currentTarget.value;
 		}
+	};
+
+	const bind = (node: HTMLInputElement) => {
+		element = node;
+
+		return { destroy: () => (element = undefined) };
 	};
 </script>
 
@@ -25,7 +39,7 @@
 		<div class="labelSpace" />
 	{/if}
 
-	<div class:withIcon={$$slots.icon} class="labelContainer">
+	<div class:withIcon={!!icon} class="labelContainer">
 		{#if label}
 			<div class:disableShrink={value || type === "file" || disableShrink} class="label">
 				{label}
@@ -34,24 +48,21 @@
 	</div>
 
 	<input
-		on:input={handleChange}
-		on:click
-		on:focus
-		on:blur
-		on:paste
-		on:keypress
-		bind:this={element}
+		{...props}
+		use:bind
 		class:disabled
-		class:withIcon={$$slots.icon}
+		class:withIcon={!!icon}
 		class="input"
 		value={(type !== "file" ? value : null) || null}
 		aria-label={label}
-		{readonly}
 		{type}
 		{disabled}
+		{oninput}
 	/>
 
-	<slot name="icon" class="pointer-events-none col-start-1 row-start-2 justify-self-end" />
+	{#if icon}
+		{@render icon({ class: "pointer-events-none col-start-1 row-start-2 justify-self-end" })}
+	{/if}
 </div>
 
 <style lang="scss">

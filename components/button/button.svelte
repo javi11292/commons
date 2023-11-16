@@ -1,22 +1,42 @@
 <script lang="ts">
-	import type { Maybe } from "$lib/commons/types";
 	import { classes } from "$lib/commons/utils/classes";
 	import type { ComponentProps } from "svelte";
 	import Icon from "../icon";
 	import LoadingIcon from "../loading-icon";
 
-	export let href: Maybe<string> = undefined;
-	export let icon: Maybe<ComponentProps<Icon>["icon"]> = undefined;
-	export let disabled: Maybe<boolean> = undefined;
-	export let element: Maybe<HTMLElement> = undefined;
-	export let variant: "contained" | "outlined" | "text" = "text";
-	export let color: "neutral" | "primary" = "primary";
-	export let size: "lg" | "sm" | "md" = "md";
-	export let loading = false;
-	export let disableUpperCase = false;
-	export let disableActive = false;
-	export let disableBorder = false;
-	export let mirror = false;
+	type Props = {
+		children?: any;
+		onclick?: () => void;
+		href?: string;
+		icon?: ComponentProps<Icon>["icon"];
+		disabled?: boolean;
+		element?: HTMLElement;
+		loading?: boolean;
+		disableUpperCase?: boolean;
+		disableActive?: boolean;
+		disableBorder?: boolean;
+		mirror?: boolean;
+		variant?: "contained" | "outlined" | "text";
+		color?: "neutral" | "primary";
+		size?: "lg" | "sm" | "md";
+	};
+
+	let {
+		children,
+		href,
+		icon,
+		disabled,
+		element,
+		loading,
+		disableUpperCase,
+		disableActive,
+		disableBorder,
+		mirror,
+		onclick,
+		variant = "text",
+		color = "primary",
+		size = "md",
+	} = $props<Props>();
 </script>
 
 <svelte:element
@@ -24,7 +44,7 @@
 	role="button"
 	tabindex="0"
 	bind:this={element}
-	on:click
+	{onclick}
 	{href}
 	{disabled}
 >
@@ -45,7 +65,7 @@
 						<Icon {icon} />
 					</div>
 				{:else}
-					<slot />
+					{@render children()}
 				{/if}
 			</span>
 		</span>

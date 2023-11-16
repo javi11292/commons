@@ -1,12 +1,15 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
 
-	export let disabled = false;
+	type Props = { disabled?: boolean };
 
-	let render = false;
+	let { disabled } = $props<Props>();
 
-	onMount(() => (render = true));
+	let render = $state(false);
+
+	$effect(() => {
+		render = true;
+	});
 </script>
 
 {#if disabled}

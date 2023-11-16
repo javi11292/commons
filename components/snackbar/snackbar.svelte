@@ -1,25 +1,23 @@
 <script lang="ts">
 	import { portal } from "$lib/commons/utils/portal";
 	import { fly } from "svelte/transition";
-	import { store, types } from "./store";
+	import { messages, types } from "./store.svelte";
 
 	const DELAY = 3000;
 
-	$: message = $store[0];
+	let message = $derived(messages.value[0]);
+	let error = $derived(message?.type === types.ERROR);
+	let show = $state(true);
 
-	$: error = message?.type === types.ERROR;
-
-	let show = true;
-
-	const handleIn = () => {
+	const introend = () => {
 		setTimeout(() => {
 			show = false;
 		}, DELAY);
 	};
 
-	const handleOut = () => {
-		$store.shift();
-		$store = $store;
+	const outroend = () => {
+		messages.value.shift();
+		messages.value = [...messages.value];
 		show = true;
 	};
 </script>
@@ -29,8 +27,8 @@
 		<div
 			class="message"
 			class:error
-			on:introend={handleIn}
-			on:outroend={handleOut}
+			on:introend={introend}
+			on:outroend={outroend}
 			transition:fly={{ y: "100%" }}
 		>
 			{message.text}

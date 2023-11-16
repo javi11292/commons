@@ -1,7 +1,9 @@
 <script lang="ts">
 	import icons from "$lib/commons/assets/icons.svg?url";
 
-	export let icon: string;
+	type Props = { icon: string };
+
+	let { icon } = $props<Props>();
 </script>
 
 <svg viewBox="0 0 24 24" fill="currentColor" class="icon">

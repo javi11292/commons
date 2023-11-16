@@ -1,2 +1,2 @@
 export { default } from "./snackbar.svelte";
-export { addError, store } from "./store";
+export { addError } from "./store.svelte";
