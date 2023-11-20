@@ -5,7 +5,6 @@
 	import LoadingIcon from "../loading-icon";
 
 	type Props = {
-		children?: any;
 		onclick?: () => void;
 		href?: string;
 		icon?: ComponentProps<Icon>["icon"];
@@ -22,7 +21,6 @@
 	};
 
 	let {
-		children,
 		href,
 		icon,
 		disabled,
@@ -65,7 +63,7 @@
 						<Icon {icon} />
 					</div>
 				{:else}
-					{@render children()}
+					<slot />
 				{/if}
 			</span>
 		</span>

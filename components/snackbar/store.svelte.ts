@@ -1,5 +1,3 @@
-import { createState } from "$lib/commons/utils/state.svelte";
-
 export enum types {
 	ERROR,
 	MESSAGE,
@@ -10,7 +8,11 @@ type Message = {
 	type: types;
 };
 
-export const messages = createState<Message[]>([]);
+class Messages {
+	value = $state<Message[]>([]);
+}
+
+export const messages = new Messages();
 
 export const addError = (text: string) =>
 	text && (messages.value = [...messages.value, { text, type: types.ERROR }]);

@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { fade } from "svelte/transition";
 
-	type Props = { disabled?: boolean };
-
-	let { disabled } = $props<Props>();
-
 	let render = $state(false);
 
 	$effect(() => {
@@ -12,10 +8,8 @@
 	});
 </script>
 
-{#if disabled}
-	<slot />
-{:else if render === true}
-	<div in:fade on:introend={() => (disabled = true)}>
+{#if render === true}
+	<div in:fade>
 		<slot />
 	</div>
 {/if}
