@@ -1,7 +1,7 @@
 type Args<T, R, P> = {
 	id: string;
-	load: (args: { data: T; props: P }) => R;
-	fetch?: (props: P) => Promise<T> | T;
+	load: (args: { data: T; args: P }) => R;
+	fetch?: (args: P) => Promise<T> | T;
 };
 
 export const getData = <T, R, P>({ id, load, fetch }: Args<T, R, P>) => {
@@ -11,18 +11,18 @@ export const getData = <T, R, P>({ id, load, fetch }: Args<T, R, P>) => {
 
 		fetch =
 			fetch &&
-			(async (props: Parameters<typeof fetch>["0"]) => {
+			(async (args: Parameters<typeof fetch>["0"]) => {
 				try {
-					const response = fetch(props);
+					const response = fetch(args);
 
 					if (!(response instanceof Promise)) {
-						this.load({ data: response, props });
+						this.load({ data: response, args });
 						return;
 					}
 
 					this.response = null;
 					this.loading = true;
-					this.load({ data: await response, props });
+					this.load({ data: await response, args });
 				} catch {}
 			});
 

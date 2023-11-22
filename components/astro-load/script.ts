@@ -6,16 +6,16 @@ class AstroLoad extends HTMLElement {
 
 		const id = this.getAttribute("id") as string;
 		const navigate = JSON.parse(this.getAttribute("navigate") as string);
-		const props = JSON.parse(this.getAttribute("props") as string);
+		const args = JSON.parse(this.getAttribute("args") as string);
 		const initialData = JSON.parse(this.getAttribute("data") as string);
 
 		const { ready } = initialize(id);
 
 		ready.then((data: any) => {
 			if (navigate) {
-				data.load({ props, data: initialData });
+				data.load({ args, data: initialData });
 			} else if (data.fetch) {
-				data.fetch(props);
+				data.fetch(args);
 			}
 		});
 	}

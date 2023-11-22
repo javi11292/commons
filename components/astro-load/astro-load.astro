@@ -2,10 +2,10 @@
 interface Props {
 	id: string;
 	apis?: ((context: any) => Promise<Response>)[];
-	props?: any;
+	args?: any;
 }
 
-const { id, apis, props } = Astro.props;
+const { id, apis, args } = Astro.props;
 const navigate = Astro.request.headers.get("sec-fetch-mode") === "navigate";
 const data =
 	navigate &&
@@ -17,7 +17,7 @@ const data =
 	{id}
 	data={JSON.stringify(data)}
 	navigate={JSON.stringify(navigate)}
-	props={JSON.stringify(props)}
+	args={JSON.stringify(args)}
 >
 </astro-load>
 
