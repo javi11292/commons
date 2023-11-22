@@ -14,9 +14,9 @@ class AstroLoad extends HTMLElement {
 		ready.then((data: any) => {
 			if (navigate) {
 				data.load({ args, data: initialData });
+			} else {
+				data.fetch(args);
 			}
-
-			data.fetch(args);
 		});
 	}
 }
