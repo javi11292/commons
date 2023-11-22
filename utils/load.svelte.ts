@@ -38,7 +38,11 @@ class Data<T extends (args: { data: any; args: any }) => any, R extends (args: a
 			const data = await response;
 			this.#end = timestamp;
 			this.load({ data, args });
-		} catch {}
+		} catch (error) {
+			if (error instanceof Error) {
+				throw error;
+			}
+		}
 	};
 
 	load = (args: Parameters<T>["0"]) => {
