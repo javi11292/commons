@@ -4,43 +4,53 @@ type Args<T, R, P> = {
 	fetch?: (args: P) => Promise<T> | T;
 };
 
-export const getData = <T, R, P>({ id, load, fetch }: Args<T, R, P>) => {
-	class Data {
-		response = $state<R | null>(null);
-		loading = $state(true);
+class Data<T extends (args: { data: any; args: any }) => any, R extends (args: any) => any> {
+	response = $state<ReturnType<T> | null>(null);
+	loading = $state(true);
 
-		fetch =
-			fetch &&
-			(async (args: Parameters<typeof fetch>["0"]) => {
-				try {
-					const response = fetch(args);
+	#load: T;
+	#fetch?: R;
 
-					if (!(response instanceof Promise)) {
-						this.load({ data: response, args });
-						return;
-					}
-
-					this.response = null;
-					this.loading = true;
-					this.load({ data: await response, args });
-				} catch {}
-			});
-
-		load = (args: Parameters<typeof load>["0"]) => {
-			this.response = load(args);
-
-			if (this.loading) {
-				this.loading = false;
-			}
-		};
+	constructor(load: T, fetch?: R) {
+		this.#load = load;
+		this.#fetch = fetch;
 	}
 
+	fetch = async (args: Parameters<R>["0"]) => {
+		if (!this.#fetch) {
+			return;
+		}
+
+		try {
+			const response = this.#fetch(args);
+
+			if (!(response instanceof Promise)) {
+				this.load({ data: response, args });
+				return;
+			}
+
+			this.response = null;
+			this.loading = true;
+			this.load({ data: await response, args });
+		} catch {}
+	};
+
+	load = (args: Parameters<T>["0"]) => {
+		this.response = this.#load(args);
+
+		if (this.loading) {
+			this.loading = false;
+		}
+	};
+}
+
+export const getData = <T, R, P>({ id, load, fetch }: Args<T, R, P>) => {
 	if (import.meta.env.SSR) {
-		return new Data();
+		return new Data(load, fetch);
 	}
 
 	const { resolve } = initialize(id);
-	const data = new Data();
+	const data = new Data(load, fetch);
 
 	resolve(data);
 
