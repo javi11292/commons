@@ -8,6 +8,8 @@ class Data<T extends (args: { data: any; args: any }) => any, R extends (args: a
 	response = $state<ReturnType<T> | null>(null);
 	loading = $state(true);
 
+	#start?: number;
+	#end?: number;
 	#load: T;
 	#fetch?: R;
 
@@ -28,15 +30,25 @@ class Data<T extends (args: { data: any; args: any }) => any, R extends (args: a
 				this.load({ data: response, args });
 				return;
 			}
-
+			const timestamp = Date.now();
+			this.#start = timestamp;
 			this.response = null;
 			this.loading = true;
-			this.load({ data: await response, args });
+
+			const data = await response;
+			this.#end = timestamp;
+			this.load({ data, args });
 		} catch {}
 	};
 
 	load = (args: Parameters<T>["0"]) => {
-		this.response = this.#load(args);
+		const response = this.#load(args);
+
+		if (this.#start !== this.#end) {
+			return;
+		}
+
+		this.response = response;
 
 		if (this.loading) {
 			this.loading = false;
