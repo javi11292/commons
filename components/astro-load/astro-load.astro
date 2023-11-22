@@ -1,17 +1,24 @@
 ---
 interface Props {
-	data: any;
 	id: string;
+	apis?: ((context: any) => Promise<Response>)[];
+	props?: any;
 }
 
-const { id, data } = Astro.props;
+const { id, apis, props } = Astro.props;
+const navigate = Astro.request.headers.get("sec-fetch-mode") === "navigate";
+const data =
+	navigate &&
+	apis &&
+	(await Promise.all(apis.map((api) => api(Astro).then((response) => response.json()))));
 ---
 
-<script define:vars={{ id, data }}>
-	const load = window.__AstroLoad__ || (window.__AstroLoad__ = {});
-	const info = load[id] || (load[id] = {});
+<astro-load
+	{id}
+	data={JSON.stringify(data)}
+	navigate={JSON.stringify(navigate)}
+	props={JSON.stringify(props)}
+>
+</astro-load>
 
-	info.data = data;
-
-	if (info.load) info.load(id);
-</script>
+<script src="./script"></script>
