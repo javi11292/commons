@@ -5,6 +5,7 @@
 	import LoadingIcon from "../loading-icon";
 
 	type Props = {
+		children?: () => any;
 		onclick?: () => void;
 		href?: string;
 		icon?: ComponentProps<Icon>["icon"];
