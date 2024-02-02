@@ -1,1 +1,1 @@
-export { default } from "./layout.astro";
+export { default } from "./layout.svelte";

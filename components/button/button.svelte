@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { classes } from "$lib/commons/utils/classes";
-	import type { ComponentProps } from "svelte";
+	import type { ComponentProps, Snippet } from "svelte";
 	import Icon from "../icon";
 	import LoadingIcon from "../loading-icon";
 
 	type Props = {
-		children?: () => any;
+		children?: () => Snippet;
 		onclick?: () => void;
 		href?: string;
 		icon?: ComponentProps<Icon>["icon"];

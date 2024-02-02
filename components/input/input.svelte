@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Snippet } from "svelte";
 	import type {
 		FormEventHandler,
 		HTMLInputAttributes,
@@ -6,17 +7,16 @@
 	} from "svelte/elements";
 
 	type Props = {
-		icon?: any;
+		icon?: Snippet;
 		label?: string;
 		type?: HTMLInputTypeAttribute;
 		value?: unknown;
 		disableShrink?: boolean;
 		disableFocusLabel?: boolean;
 		disabled?: boolean;
-		element?: HTMLElement;
 	} & HTMLInputAttributes;
 
-	let { label, type, value, disableShrink, disableFocusLabel, disabled, element, icon, ...props } =
+	let { label, type, value, disableShrink, disableFocusLabel, disabled, icon, ...props } =
 		$props<Props>();
 
 	const oninput: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
@@ -25,12 +25,6 @@
 		} else {
 			value = currentTarget.value;
 		}
-	};
-
-	const bind = (node: HTMLInputElement) => {
-		element = node;
-
-		return { destroy: () => (element = undefined) };
 	};
 </script>
 
@@ -49,7 +43,6 @@
 
 	<input
 		{...props}
-		use:bind
 		class:disabled
 		class:withIcon={!!icon}
 		class="input"
@@ -61,7 +54,7 @@
 	/>
 
 	{#if icon}
-		{@render icon({ class: "pointer-events-none col-start-1 row-start-2 justify-self-end" })}
+		{@render icon()}
 	{/if}
 </div>
 
