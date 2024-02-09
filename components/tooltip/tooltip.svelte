@@ -1,29 +1,43 @@
 <script lang="ts">
-	import type { Maybe } from "$lib/commons/types";
-	import { classes } from "$lib/commons/utils/classes";
+	import type { Snippet } from "svelte";
 	import { cubicInOut } from "svelte/easing";
 
-	let className: Maybe<string> = undefined;
-
-	export { className as class };
-	export let show = false;
+	let { children, tooltip } = $props<{ show?: boolean; children: Snippet; tooltip: Snippet }>();
 
 	const appear = (_node: HTMLDivElement) => ({
-		duration: 300,
+		duration: 150,
 		easing: cubicInOut,
 		css: (t: number) => `
       scale: ${t / 2 + 0.5};
       opacity: ${t};
     `,
 	});
+
+	let show = $state(false);
 </script>
 
-<span class={classes(className, "relative")}>
-	<slot />
+<span
+	class="container"
+	onmouseenter={() => (show = true)}
+	onmouseleave={() => (show = false)}
+	role="tooltip"
+>
+	{@render children()}
 
 	{#if show}
-		<div transition:appear class="absolute z-10 w-full rounded bg-zinc-900 pb-4 pt-4 shadow">
-			<slot name="tooltip" />
+		<div transition:appear class="tooltip">
+			{@render tooltip()}
 		</div>
 	{/if}
 </span>
+
+<style lang="scss">
+	.container {
+		position: relative;
+	}
+
+	.tooltip {
+		position: absolute;
+		width: 100%;
+	}
+</style>
