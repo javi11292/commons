@@ -1,11 +1,6 @@
-@use "$lib/commons/theme";
-
 html {
 	height: 100%;
 	font-family: sans-serif;
-	color: white;
-	background: black;
-	color-scheme: dark;
 	scrollbar-gutter: stable;
 	-webkit-tap-highlight-color: transparent;
 }
@@ -15,6 +10,7 @@ body {
 	margin: 0;
 }
 
+a,
 input,
 button {
 	all: unset;

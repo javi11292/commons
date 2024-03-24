@@ -19,7 +19,7 @@
 		});
 	});
 
-	let { children } = $props<{ children: Snippet }>();
+	let { children }: { children: Snippet } = $props();
 </script>
 
 {@render children()}
