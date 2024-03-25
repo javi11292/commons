@@ -3,7 +3,7 @@
 
 	type Props = { icon: string };
 
-	let { icon } = $props<Props>();
+	let { icon }: Props = $props();
 </script>
 
 <svg viewBox="0 0 24 24" fill="currentColor" class="icon">
