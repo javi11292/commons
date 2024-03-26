@@ -39,9 +39,7 @@
 
 %hover {
 	@extend %root;
-
 	@include hover;
-
 	@include active;
 }
 
