@@ -1,3 +1,9 @@
+$colorNeutralLight: #a3a3a3;
+$colorNeutral: #737373;
+$colorNeutralDark: #404040;
+$colorPrimary: #84cc16;
+$colorError: #b91c1c;
+
 @mixin root {
 	position: relative;
 	transition: all;
