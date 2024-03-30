@@ -8,6 +8,7 @@ $colorError: #b91c1c;
 	position: relative;
 	transition: all;
 	transition-duration: 200ms;
+	cursor: pointer;
 
 	&::before {
 		position: absolute;
