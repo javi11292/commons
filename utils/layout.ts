@@ -1,9 +1,8 @@
-<script lang="ts">
-	import { browser, dev } from "$app/environment";
-	import { onNavigate } from "$app/navigation";
-	import "$lib/commons/assets/global.scss";
-	import type { Snippet } from "svelte";
+import { browser, dev } from "$app/environment";
+import { onNavigate } from "$app/navigation";
+import "$lib/commons/assets/global.scss";
 
+export const layout = () => {
 	if (browser && !dev && navigator.serviceWorker) {
 		navigator.serviceWorker.register("/service-worker.js");
 	}
@@ -18,8 +17,4 @@
 			});
 		});
 	});
-
-	let { children }: { children: Snippet } = $props();
-</script>
-
-{@render children()}
+};
