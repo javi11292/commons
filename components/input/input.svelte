@@ -16,18 +16,8 @@
 		disabled?: boolean;
 	} & HTMLInputAttributes;
 
-	let {
-		label,
-		type,
-		value,
-		disableShrink,
-		disableFocusLabel,
-		disabled,
-		icon,
-		class: className,
-		style,
-		...props
-	}: Props = $props();
+	let { label, type, value, disableShrink, disableFocusLabel, disabled, icon, ...props }: Props =
+		$props();
 
 	const handleInput: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
 		if (type === "file") {
@@ -38,7 +28,7 @@
 	};
 </script>
 
-<div class:disabled class:focusLabel={!disableFocusLabel} class="container {className}" {style}>
+<div class:disabled class:focusLabel={!disableFocusLabel} class="input">
 	{#if label}
 		<div class="labelSpace" />
 	{/if}
@@ -55,7 +45,6 @@
 		{...props}
 		class:disabled
 		class:withIcon={icon}
-		class="input"
 		value={(type !== "file" ? value : null) || null}
 		aria-label={label}
 		{type}
@@ -69,7 +58,7 @@
 </div>
 
 <style lang="scss">
-	.container {
+	.input {
 		display: grid;
 		border-bottom: 1px solid;
 		transition: all;
@@ -124,7 +113,7 @@
 		line-height: 1rem;
 	}
 
-	.input {
+	input {
 		grid-column-start: 1;
 		grid-row-start: 2;
 		padding: 0.25rem 0;
