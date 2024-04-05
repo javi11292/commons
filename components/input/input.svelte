@@ -16,10 +16,20 @@
 		disabled?: boolean;
 	} & HTMLInputAttributes;
 
-	let { label, type, value, disableShrink, disableFocusLabel, disabled, icon, ...props } =
-		$props<Props>();
+	let {
+		label,
+		type,
+		value,
+		disableShrink,
+		disableFocusLabel,
+		disabled,
+		icon,
+		class: className,
+		style,
+		...props
+	}: Props = $props();
 
-	const oninput: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
+	const handleInput: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
 		if (type === "file") {
 			value = currentTarget.files?.[0];
 		} else {
@@ -28,12 +38,12 @@
 	};
 </script>
 
-<div class:disabled class:focusLabel={!disableFocusLabel} class="container">
+<div class:disabled class:focusLabel={!disableFocusLabel} class="container {className}" {style}>
 	{#if label}
 		<div class="labelSpace" />
 	{/if}
 
-	<div class:withIcon={!!icon} class="labelContainer">
+	<div class:withIcon={icon} class="labelContainer">
 		{#if label}
 			<div class:disableShrink={value || type === "file" || disableShrink} class="label">
 				{label}
@@ -44,13 +54,13 @@
 	<input
 		{...props}
 		class:disabled
-		class:withIcon={!!icon}
+		class:withIcon={icon}
 		class="input"
 		value={(type !== "file" ? value : null) || null}
 		aria-label={label}
 		{type}
 		{disabled}
-		{oninput}
+		oninput={handleInput}
 	/>
 
 	{#if icon}
@@ -59,10 +69,7 @@
 </div>
 
 <style lang="scss">
-	@use "$lib/commons/theme";
-
 	.container {
-		color: theme.$colorNeutralLight;
 		display: grid;
 		border-bottom: 1px solid;
 		transition: all;
@@ -70,7 +77,7 @@
 		border-bottom: 1px solid currentColor;
 
 		&:focus-within {
-			border-color: theme.$colorPrimary;
+			border-color: var(--focus-color);
 		}
 	}
 
@@ -97,7 +104,7 @@
 		&:focus-within {
 			.label {
 				@extend .disableShrink;
-				color: theme.$colorPrimary;
+				color: var(--focus-color);
 			}
 		}
 	}
@@ -125,10 +132,9 @@
 		width: 100%;
 		transition: all;
 		transition-duration: 200ms;
-		color: white;
 	}
 
 	.disabled {
-		color: theme.$colorNeutral;
+		color: var(--disabled-color);
 	}
 </style>
