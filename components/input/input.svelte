@@ -47,9 +47,9 @@
 		class:withIcon={icon}
 		value={(type !== "file" ? value : null) || null}
 		aria-label={label}
+		oninput={handleInput}
 		{type}
 		{disabled}
-		oninput={handleInput}
 	/>
 
 	{#if icon}
