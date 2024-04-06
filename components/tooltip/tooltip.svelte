@@ -2,7 +2,7 @@
 	import type { Snippet } from "svelte";
 	import { cubicInOut } from "svelte/easing";
 
-	let { children, tooltip } = $props<{ show?: boolean; children: Snippet; tooltip: Snippet }>();
+	let { children, tooltip }: { show?: boolean; children: Snippet; tooltip: Snippet } = $props();
 
 	const appear = (_node: HTMLDivElement) => ({
 		duration: 150,
