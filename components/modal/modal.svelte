@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { portal } from "$lib/commons/utils/portal";
+	import type { Snippet } from "svelte";
 	import { fade, scale } from "svelte/transition";
 
-	export let open = false;
+	let { open, children }: { open?: boolean; children: Snippet } = $props();
 </script>
 
 {#if open}
@@ -18,15 +19,13 @@
 	>
 		<div transition:scale class="modal">
 			<div class="content">
-				<slot />
+				{@render children()}
 			</div>
 		</div>
 	</div>
 {/if}
 
 <style lang="scss">
-	@use "$lib/commons/theme";
-
 	.backdrop {
 		position: fixed;
 		inset: 0;
@@ -43,7 +42,7 @@
 		max-width: 90vw;
 		overflow: hidden;
 		border-radius: 0.25rem;
-		background: theme.$colorNeutralDark;
+		background: var(--background);
 		box-shadow: 0 4px 6px black;
 	}
 
