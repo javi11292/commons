@@ -34,26 +34,11 @@
 		onanimationstart={handleAnimation(true)}
 		onanimationend={handleAnimation(false)}
 	>
-		{@render children()}
+		<div>
+			{@render children()}
+		</div>
 	</dialog>
 {/if}
-
-<!-- <div
-		onclick={handleClick}
-		onkeypress={handleClick}
-		hidden
-		tabindex="0"
-		role="button"
-		class="backdrop"
-		transition:fade={{ duration: 200 }}
-	>
-		<div transition:scale={{ duration: 200 }} class="modal">
-			<div class="content">
-				{@render children()}
-			</div>
-		</div>
-	</div>
-  -->
 
 <style lang="scss">
 	::backdrop {
@@ -75,6 +60,12 @@
 		box-shadow: 0 4px 6px black;
 		max-width: 90dvw;
 		max-height: 90dvh;
+		padding: 0;
+		overflow: hidden;
+
+		div {
+			overflow: auto;
+		}
 	}
 
 	dialog::backdrop {
