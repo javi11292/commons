@@ -5,8 +5,10 @@
 	// eslint-disable-next-line no-undef
 	let { open = $bindable(false), children }: { open?: boolean; children: Snippet } = $props();
 
-	const handleClick = () => {
-		open = false;
+	const handleClick = (event: Event) => {
+		if (event.target === dialog) {
+			open = false;
+		}
 	};
 
 	let dialog = $state<HTMLDialogElement>();
