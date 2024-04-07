@@ -20,14 +20,14 @@ export class NetworkError<T extends { message: string }> extends Error {
 	}
 }
 
-export const request: Request = async (url, init = {}, raw) => {
+export const request: Request = async (url, init = {}, originalResponse) => {
 	if (typeof window !== "undefined") {
 		init.credentials = "include";
 	}
 
 	const response = await fetch(url, init);
 
-	const data = raw ? response : await parseResponse(response);
+	const data = originalResponse ? response : await parseResponse(response);
 
 	if (!response.ok) {
 		throw new NetworkError(data);
@@ -36,11 +36,11 @@ export const request: Request = async (url, init = {}, raw) => {
 	return data;
 };
 
-export const get: Get = (url, raw) => {
-	return request(url, undefined, raw);
+export const get: Get = (url, originalResponse) => {
+	return request(url, undefined, originalResponse);
 };
 
-export const post: Post = (url, body, raw) => {
+export const post: Post = (url, body, originalResponse) => {
 	return request(
 		url,
 		{
@@ -50,7 +50,7 @@ export const post: Post = (url, body, raw) => {
 			},
 			body: JSON.stringify(body),
 		},
-		raw,
+		originalResponse,
 	);
 };
 
