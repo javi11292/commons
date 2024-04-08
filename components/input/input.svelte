@@ -16,15 +16,20 @@
 		disabled?: boolean;
 	} & HTMLInputAttributes;
 
-	let { label, type, value, disableShrink, disableFocusLabel, disabled, icon, ...props }: Props =
-		$props();
+	let {
+		// eslint-disable-next-line no-undef
+		value = $bindable(),
+		label,
+		type,
+		disableShrink,
+		disableFocusLabel,
+		disabled,
+		icon,
+		...props
+	}: Props = $props();
 
 	const handleInput: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
-		if (type === "file") {
-			value = currentTarget.files?.[0];
-		} else {
-			value = currentTarget.value;
-		}
+		value = currentTarget.files;
 	};
 </script>
 
@@ -41,16 +46,40 @@
 		{/if}
 	</div>
 
-	<input
-		{...props}
-		class:disabled
-		class:withIcon={icon}
-		value={(type !== "file" ? value : null) || null}
-		aria-label={label}
-		oninput={handleInput}
-		{type}
-		{disabled}
-	/>
+	{#if type !== "file"}
+		<input
+			{...props}
+			class:disabled
+			class:withIcon={icon}
+			aria-label={label}
+			bind:value
+			{type}
+			{disabled}
+		/>
+	{:else}
+		<label class:disabled class:withIcon={icon}>
+			<input
+				{...props}
+				aria-label={label}
+				oninput={handleInput}
+				{type}
+				{disabled}
+				accept="image/webp"
+			/>
+
+			{#if value}
+				{#each value as file, index}
+					{#if index < value.length - 1}
+						{file.name}, &nbsp;
+					{:else}
+						{file.name}
+					{/if}
+				{/each}
+			{:else}
+				&nbsp;
+			{/if}
+		</label>
+	{/if}
 
 	{#if icon}
 		{@render icon()}
@@ -67,6 +96,14 @@
 
 		&:focus-within {
 			border-color: var(--focus-color);
+		}
+	}
+
+	label {
+		cursor: pointer;
+
+		input {
+			display: none;
 		}
 	}
 
