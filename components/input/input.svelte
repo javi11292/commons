@@ -7,6 +7,9 @@
 	} from "svelte/elements";
 
 	type Props = {
+		textarea?: boolean;
+		regex?: RegExp;
+		rows?: number;
 		icon?: Snippet;
 		label?: string;
 		type?: HTMLInputTypeAttribute;
@@ -19,6 +22,9 @@
 	let {
 		// eslint-disable-next-line no-undef
 		value = $bindable(),
+		regex,
+		rows,
+		textarea,
 		label,
 		type,
 		disableShrink,
@@ -28,8 +34,18 @@
 		...props
 	}: Props = $props();
 
-	const handleInput: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
+	const handleFileInput: FormEventHandler<HTMLInputElement> = ({ currentTarget }) => {
 		value = currentTarget.files;
+	};
+
+	const handleInput: FormEventHandler<HTMLInputElement | HTMLTextAreaElement> = ({
+		currentTarget,
+	}) => {
+		if (!regex || regex.test(currentTarget.value)) {
+			value = currentTarget.value;
+		} else {
+			currentTarget.value = value;
+		}
 	};
 </script>
 
@@ -46,43 +62,37 @@
 		{/if}
 	</div>
 
-	{#if type !== "file"}
+	{#if textarea}
+		<textarea
+			{rows}
+			class:disabled
+			class:withIcon={icon}
+			oninput={handleInput}
+			aria-label={label}
+			{value}
+			{disabled}
+		/>
+	{:else if type !== "file"}
 		<input
 			{...props}
 			class:disabled
 			class:withIcon={icon}
+			oninput={handleInput}
 			aria-label={label}
-			bind:value
+			{value}
 			{type}
 			{disabled}
 		/>
 	{:else}
 		<label class:disabled class:withIcon={icon}>
-			<input
-				{...props}
-				aria-label={label}
-				oninput={handleInput}
-				{type}
-				{disabled}
-				accept="image/webp"
-			/>
-
-			{#if value}
-				{#each value as file, index}
-					{#if index < value.length - 1}
-						{file.name}, &nbsp;
-					{:else}
-						{file.name}
-					{/if}
-				{/each}
-			{:else}
-				&nbsp;
-			{/if}
+			<input {...props} aria-label={label} oninput={handleFileInput} {type} {disabled} />
 		</label>
 	{/if}
 
 	{#if icon}
-		{@render icon()}
+		<div class="icon">
+			{@render icon()}
+		</div>
 	{/if}
 </div>
 
@@ -93,10 +103,18 @@
 		transition: all;
 		transition-duration: 200ms;
 		border-bottom: 1px solid currentColor;
+		position: relative;
 
 		&:focus-within {
 			border-color: var(--focus-color);
 		}
+	}
+
+	.icon {
+		grid-column-start: 1;
+		grid-row-start: 2;
+		margin-left: auto;
+		align-self: center;
 	}
 
 	label {
@@ -108,7 +126,7 @@
 	}
 
 	.withIcon {
-		margin-right: 1.5rem;
+		padding-right: 1.5rem;
 	}
 
 	.labelSpace {
@@ -150,7 +168,9 @@
 		line-height: 1rem;
 	}
 
-	input {
+	input,
+	textarea {
+		all: unset;
 		grid-column-start: 1;
 		grid-row-start: 2;
 		padding: 0.25rem 0;
